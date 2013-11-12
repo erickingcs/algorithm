@@ -25,17 +25,10 @@ struct TreeNode {
 class Solution {
 public:
 	TreeNode *createTree(vector<int> &num, int start, int end) {
-		if (start == end) {
-			TreeNode *root = new TreeNode(num[start]);
-			return root;
-		} else if (start == end - 1) { // be careful
-			// just choose one kind of tree
-			TreeNode *root = new TreeNode(num[end]);
-			root->left = new TreeNode(num[start]);
-			return root;
-		} else { // start < end
+		if (start > end) {
+			return nullptr;
+		} else { // start <= end
 			int mid = start + (end - start) / 2;
-
 			// let the middle element as root
 			TreeNode *root = new TreeNode(num[mid]);
 			// create left child tree recursively
