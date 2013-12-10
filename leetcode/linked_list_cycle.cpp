@@ -30,10 +30,8 @@ public:
         if (head == nullptr)
             return false;
 
-        ListNode dumbNode(-1);
-        dumbNode.next = head;
-        ListNode *slow = &dumbNode;
-        ListNode *fast = slow;
+        ListNode *slow = head;
+        ListNode *fast = head;
 
         while (fast && fast->next) {
             slow = slow->next;

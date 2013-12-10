@@ -28,11 +28,7 @@ struct TreeNode {
     }
 };
 
-// O(n) space should not calculate the stack used to traverse tree
-// as recursion also has an implicit stack
-// and we must traverse all nodes to recover it
-// so, this solution is O(1) space
-
+// O(n) due to stack
 class Solution
 {
 public:
@@ -101,6 +97,62 @@ public:
     }
 };
 
+// Morris traversal solution
+// O(1) space complexity
+class Solution2
+{
+private:
+    void judge(pair<TreeNode *, TreeNode *> &broken, TreeNode *prev, TreeNode *cur)
+    {
+        if (prev && prev->val > cur->val) { // broken
+            if (!broken.first) {
+                // first broken node must be prev because we swapped a bigger node to be here
+                // we could be aware of this broken until traversing its next node(cur)
+                broken.first = prev;
+            }
+
+            // obviously, second broken node must be cur as it is smaller
+            // always set broken.second as tree may have only two nodes
+            // that means we found two broken nodes at the same time
+            broken.second = cur;
+        }
+    }
+
+public:
+    void recoverTree(TreeNode *root)
+    {
+        TreeNode *cur = root;
+        TreeNode *prev = nullptr;
+        TreeNode *t = nullptr;
+
+        pair<TreeNode *, TreeNode *> broken;
+
+        while (cur) {
+            if (!cur->left) {
+                judge(broken, prev, cur);
+                prev = cur;
+                cur = cur->right;
+            } else {
+                t = cur->left; // left child
+                while (t->right && t->right != cur) t = t->right; // rightmost
+
+                if (!t->right) { // thread it
+                    t->right = cur;
+                    cur = cur->left;
+                } else { // delete thread
+                    t->right = nullptr;
+
+                    judge(broken, prev, cur);
+                    prev = cur;
+                    cur = cur->right;
+                }
+            }
+        }
+
+        swap(broken.first->val, broken.second->val);
+    }
+};
+
 void print_tree(TreeNode *root)
 {
     if (root) {
@@ -112,7 +164,7 @@ void print_tree(TreeNode *root)
 
 int main(int argc, char *argv[])
 {
-    Solution sol;
+    Solution2 sol;
 
     TreeNode *t1 = new TreeNode(0);
     t1->left = new TreeNode(1);

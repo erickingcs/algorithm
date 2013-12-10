@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 
@@ -63,6 +64,26 @@ public:
         }
         return maxLength;
     }
+
+    int lengthOfLongestSubstring3(string s)
+    {
+        const int CHAR_SET = 256;
+        vector<int> prevPos(CHAR_SET, -1); // character's previous position, -1, not 0
+
+        size_t maxLen = 0;
+        size_t start = 0; // start point without duplicate char
+
+        for (size_t i = 0; i < s.size(); i++) {
+            if (prevPos[s[i]] >= (int)start) { // compare with start point
+                maxLen = max(maxLen, i - start);
+                start = prevPos[s[i]] + 1; // update start point without duplicate char
+            }
+
+            prevPos[s[i]] = i;
+        }
+        maxLen =  max(s.size() - start, maxLen); // do not forget the last one
+        return maxLen;
+    }
 };
 
 int main(int argc, char* argv[])
@@ -72,6 +93,7 @@ int main(int argc, char* argv[])
     Solution sol;
     cout << sol.lengthOfLongestSubstring(s) << endl;
     cout << sol.lengthOfLongestSubstring2(s) << endl;
+    cout << sol.lengthOfLongestSubstring3(s) << endl;
 
     return 0;
 }

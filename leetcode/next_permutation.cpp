@@ -40,20 +40,19 @@ class Solution
 public:
     void nextPermutation(vector<int> &num)
     {
-        int k = num.size() - 1;
-        while (k) { // step 1
-            if (num[k - 1] < num[k])
+        int k = num.size() - 2;
+        while (k >= 0) { // step 1
+            if (num[k] < num[k + 1])
                 break;
             k--;
         }
-        if (k == 0) {
+        if (k < 0) {
             reverse(num.begin(), num.end());
             return;
         }
-        k--;
 
         int l = num.size() - 1;
-        while (l) { // step 2
+        while (l > k) { // step 2
             if (num[l] > num[k])
                 break;
             l--;

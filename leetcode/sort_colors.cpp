@@ -48,6 +48,17 @@ public:
             }
         }
     }
+
+    void sortColors2(int A[], int n)
+    {
+        int red = 0, blue = n - 1;
+        int i = 0;
+        while (i <= blue) {
+            if (A[i] == 0) swap(A[i++], A[red++]);
+            else if (A[i] == 2) swap(A[i], A[blue--]); // not i++
+            else i++;
+        }
+    }
 };
 
 int main(int argc, char *argv[])

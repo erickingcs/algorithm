@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ struct TreeNode {
     }
 };
 
+// recursively
 class Solution
 {
 public:
@@ -37,9 +39,41 @@ public:
     }
 };
 
+// unrecursively
+class Solution2
+{
+public:
+    int maxDepth(TreeNode *root)
+    {
+        if (!root) return 0;
+
+        queue<TreeNode *> q;
+        TreeNode *cur = nullptr;
+        int level = 0, levelSize = 0;
+        q.push(root);
+
+        while (!q.empty()) {
+            if (levelSize == 0 ) {
+                levelSize = q.size();
+                level++;
+            }
+
+            cur = q.front();
+            q.pop();
+            levelSize--;
+
+            if (cur->left) q.push(cur->left);
+            if (cur->right) q.push(cur->right);
+        }
+
+        return level;
+    }
+};
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
 
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
@@ -48,6 +82,7 @@ int main(int argc, char *argv[])
     root->right->right = new TreeNode(5);
 
     cout << sol.maxDepth(root) << endl;
+    cout << sol2.maxDepth(root) << endl;
 
     return 0;
 }

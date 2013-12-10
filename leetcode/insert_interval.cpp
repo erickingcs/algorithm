@@ -30,8 +30,6 @@ struct Interval {
     Interval(int s, int e) : start(s), end(e) {}
 };
 
-// Oj: 696 ms
-// will try union find data structure later
 class Solution
 {
 public:

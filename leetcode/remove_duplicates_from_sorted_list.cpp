@@ -52,6 +52,27 @@ public:
 
         return head;
     }
+
+    ListNode *deleteDuplicates2(ListNode *head)
+    {
+        if (head == NULL)
+            return head;
+
+        ListNode *p1 = head, *p2 = head->next;
+
+        while (p2) {
+            if (p2->val == p1->val) {
+                p1->next = p2->next;
+                // delete p2;
+                p2 = p1->next;
+            } else {
+                p1 = p2;
+                p2 = p2->next;
+            }
+        }
+
+        return head;
+    }
 };
 
 void output_list(ListNode *head)

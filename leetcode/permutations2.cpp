@@ -53,6 +53,10 @@ public:
             ret.push_back(num);
         } else {
             for (int i = index; i < n; i++) {
+                // we cannot sort array first and then just compare with previous element
+                // like we did in subset ||, becuase we swapped array before, so that way
+                // does not work.
+
                 // verify that element i is not the same to element from 'index to i-1'
                 bool isDuplicate = false;
                 for (int j = index; j < i; j++) {

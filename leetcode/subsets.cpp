@@ -50,7 +50,7 @@ public:
         vector<vector<int> > ret;
         vector<int> selection;
 
-        sort(v.begin(), v.end()); //make sure small numbers are present first
+        sort(v.begin(), v.end()); // make sure small numbers are present first
         ret.push_back(selection); // add empty subset first
         get_non_empty_subset(v, 0, v.size() - 1, ret, selection);
 
@@ -58,12 +58,33 @@ public:
     }
 };
 
+// iterative
+class Solution2
+{
+public:
+    vector<vector<int> > subsets(vector<int> &v)
+    {
+        sort(v.begin(), v.end()); // make sure small numbers are present first
+        vector<vector<int> > ret(1); // initial state, one empty subset
+
+        ret.reserve(pow(2, v.size())); // avoid reallocation, which will lead to copy/for_each crash
+        for (auto e : v) {
+            auto end = ret.end();
+            copy(ret.begin(), end, back_inserter(ret));
+            for_each(end, ret.end(), [&e](vector<int> &t) {
+                t.push_back(e);
+            });
+        }
+
+        return ret;
+    }
+};
+
 void print_ret(vector<vector<int>> &v)
 {
-    cout << endl;
-    for (auto &v1 : v) {
-        for (auto t : v1)
-            cout << t << ends;
+    for (auto &row : v) {
+        for (auto col : row)
+            cout << col << ' ' ;
         cout << endl;
     }
 }
@@ -72,8 +93,12 @@ int main(int argc, char* argv[])
 {
     vector<int> v = { 3, 1, 2 };
     Solution sol;
+    Solution2 sol2;
 
     vector<vector<int>> ret = sol.subsets(v);
+    print_ret(ret);
+
+    ret = sol2.subsets(v);
     print_ret(ret);
 
     return 0;

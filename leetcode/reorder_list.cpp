@@ -57,16 +57,16 @@ public:
     {
         ListNode dumbNode(-1);
         dumbNode.next = head;
-        ListNode *p = &dumbNode, *q = p;
+        ListNode *slow = &dumbNode, *fast = slow;
 
-        while (q && q->next) {
-            p = p->next;
-            q = q->next->next;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
-        q = p->next;
-        p->next = nullptr;
-        return q;
+        fast = slow->next;
+        slow->next = nullptr;
+        return fast;
     }
 
     void merge_list(ListNode *l1, ListNode *l2)

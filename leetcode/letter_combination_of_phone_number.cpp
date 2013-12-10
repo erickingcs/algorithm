@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -54,15 +55,65 @@ public:
     }
 };
 
+// iterative
+class Solution2
+{
+    // static vector<string> d2c;
+    const vector<string> d2c {
+        "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv",
+        "wxyz"
+    };
+
+public:
+    vector<string> letterCombinations(string digits)
+    {
+        vector<string> ret(1); // one initial empty string
+
+        for (auto d : digits) {
+            int n = ret.size();
+            int m = d2c[d - '0'].size();
+
+            ret.resize(n * m);
+            // add n * (m - 1) duplicate elements
+            // there are n * m elements in total
+            for (int i = 1; i < m; i++) {
+                copy(ret.begin(), ret.begin() + n, ret.begin() + n * i);
+            }
+
+            // for each duplicate group (m groups in total)
+            // add one more character to each group with different character
+            for (int i = 0; i < m ; i++) {
+                for_each(ret.begin() + n * i, ret.begin() + n * (i + 1), [&](string &s) {
+                    s += d2c[d - '0'][i];
+                });
+            }
+        }
+
+        return ret;
+    }
+};
+#if 0
+vector<string> Solution2::d2c = {
+    "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv",
+    "wxyz"
+};
+#endif
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
     string s("23");
 
     vector<string> ret = sol.letterCombinations(s);
-
     for (auto t : ret)
-        cout << t << ends;
+        cout << t << ' ' ;
+    cout << endl;
+
+    ret = sol2.letterCombinations(s);
+    for (auto t : ret)
+        cout << t << ' ' ;
+    cout << endl;
 
     return 0;
 }

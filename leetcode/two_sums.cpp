@@ -23,7 +23,7 @@ using namespace std;
 class Solution
 {
 public:
-    // brute force, O(n^2)
+    // brute force, O(n^2), TLE
     vector<int> twoSum1(vector<int> &numbers, int target)
     {
         vector<int> ret;
@@ -45,20 +45,18 @@ public:
         unordered_map<int, int> hash; // no need to use multimap
 
         for (int i = 0; i < numbers.size(); i++) {
-            hash[numbers[i]] = i;
+            hash[numbers[i]] = i; // store position
         }
 
         // traverse the original array, if it has duplicate numbers and those duplicate
-        // numbers' addition is target, it must have two duplicate
-        // we keep the latter one's subscript in hash table
+        // numbers' addition is target, it must have two duplicates as there exists a solution
+        // we keep the latter one's subscript in hash table.
         for (int i = 0; i < numbers.size(); i++) { // original array
-            int sub = target - numbers[i];
-            if (hash.find(sub) != hash.end()) {
-                int index2 = hash[sub];
-                if (i > index2)
-                    swap(i, index2);
+            int key = target - numbers[i];
+            auto ite = hash.find(key);
+            if (ite != hash.end() && ite->second != i) {
                 ret.push_back(i + 1);
-                ret.push_back(index2 + 1);
+                ret.push_back(ite->second + 1);
                 return ret;
             }
         }
@@ -73,7 +71,7 @@ int main(int argc, char* argv[])
 
     vector<int> res = s.twoSum2(numbers, target);
     for (auto e : res) {
-        cout << e << ends;
+        cout << e << endl;
     }
 
     return 0;

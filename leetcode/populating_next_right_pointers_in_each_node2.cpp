@@ -45,6 +45,7 @@ struct TreeLinkNode {
     }
 };
 
+// O(n) space complexity
 class Solution
 {
 public:
@@ -80,6 +81,46 @@ public:
         if (!root)
             return;
         levelOrderTraversal(root);
+    }
+};
+
+// O(1) space complexity
+class Solution2
+{
+public:
+    void connect(TreeLinkNode *root)
+    {
+        TreeLinkNode *cur = root;
+        TreeLinkNode *nextLevel = nullptr; // next level head
+        TreeLinkNode *prev = nullptr; // previous node in current level
+
+        while (cur) {
+            // reset temp variable
+            nextLevel = nullptr;
+            prev = nullptr;
+
+            while (cur) {
+                // store next level head
+                if (!nextLevel) nextLevel = cur->left ? cur->left : cur->right;
+
+                // link node according to prev pointer
+                if (cur->left) {
+                    if (prev) prev->next = cur->left;
+                    prev = cur->left;
+                }
+                if (cur->right) {
+                    if (prev) prev->next = cur->right;
+                    prev = cur->right;
+                }
+
+                // next node in the same level
+                // we just linked it by prev pointer
+                cur = cur->next;
+            }
+
+            // traverse next level
+            cur = nextLevel;
+        }
     }
 };
 

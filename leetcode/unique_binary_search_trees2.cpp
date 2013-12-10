@@ -62,7 +62,7 @@ public:
 
     vector<TreeNode *> generateTrees(int n)
     {
-        if (n < 0 ) return vector<TreeNode *>();
+        if (n < 0) return vector<TreeNode *>();
 
         // bug: n == 0, empty tree, vector must have one nullptr element
         return generate(1, n);

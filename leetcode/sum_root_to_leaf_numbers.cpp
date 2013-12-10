@@ -41,6 +41,7 @@ struct TreeNode {
     }
 };
 
+// post unrecursive traverse
 class Solution
 {
 private:
@@ -91,6 +92,30 @@ public:
         if (root == nullptr)
             return 0;
         return getSum(root);
+    }
+};
+
+// preorder recursive traverse
+class Solution2
+{
+    void getSum(TreeNode *t, int cur, int &sum)
+    {
+        if (t) {
+            if (!t->left && !t->right) {
+                sum += cur * 10 + t->val;
+                return;
+            }
+            getSum(t->left, cur * 10 + t->val, sum);
+            getSum(t->right, cur * 10 + t->val, sum);
+        }
+    }
+
+public:
+    int sumNumbers(TreeNode *root)
+    {
+        int sum = 0, cur = 0;
+        getSum(root, cur, sum);
+        return sum;
     }
 };
 

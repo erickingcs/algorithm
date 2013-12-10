@@ -38,6 +38,23 @@ public:
 
         return i;
     }
+
+    int searchInsert2(int A[], int n, int target)
+    {
+        if (n <= 0)
+            return -1;
+
+        int low = 0, high = n - 1;
+        while (low <= high) {
+            int mid = low + ((high - low) >> 1);
+            if (A[mid] == target) return mid;
+            else if (target > A[mid]) low = mid + 1;
+            else high = mid - 1;
+
+        }
+
+        return low;
+    }
 };
 
 int main(int argc, char *argv[])
@@ -49,6 +66,11 @@ int main(int argc, char *argv[])
     cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 2) << endl;
     cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 7) << endl;
     cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 0) << endl;
+
+    cout << sol.searchInsert2(a, sizeof(a) / sizeof(int), 5) << endl;
+    cout << sol.searchInsert2(a, sizeof(a) / sizeof(int), 2) << endl;
+    cout << sol.searchInsert2(a, sizeof(a) / sizeof(int), 7) << endl;
+    cout << sol.searchInsert2(a, sizeof(a) / sizeof(int), 0) << endl;
 
     return 0;
 }

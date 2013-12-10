@@ -128,10 +128,49 @@ public:
     }
 };
 
+// another simple iterative solution
+class Solution3
+{
+public:
+    bool isSymmetric(TreeNode *root)
+    {
+        if (!root) return true;
+
+        queue<TreeNode *> q;
+        TreeNode *t1, *t2;
+
+        q.push(root->left);
+        q.push(root->right);
+
+        while (!q.empty()) {
+            t1 = q.front();
+            q.pop();
+            t2 = q.front();
+            q.pop();
+
+            if (!t1 && !t2) continue; // match, both are null tree
+            if (!t1 || !t2) return false; // not match
+            if (t1->val != t2->val) return false; // not match
+
+            // push null sub tree to queue so that
+            // we could perfectly match
+            // left matches right subtree
+            q.push(t1->left);
+            q.push(t2->right);
+
+            q.push(t1->right);
+            q.push(t2->left);
+        }
+
+        return true;
+    }
+};
+
 int main(int argc, char *argv[])
 {
     Solution sol;
-    Solution sol2;
+    Solution2 sol2;
+    Solution3 sol3;
 
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
@@ -151,6 +190,9 @@ int main(int argc, char *argv[])
 
     cout << sol2.isSymmetric(root) << endl;
     cout << sol2.isSymmetric(root2) << endl;
+
+    cout << sol3.isSymmetric(root) << endl;
+    cout << sol3.isSymmetric(root2) << endl;
 
     return 0;
 }

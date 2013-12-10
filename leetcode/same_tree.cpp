@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -39,9 +40,43 @@ public:
     }
 };
 
+// unrecursively
+class Solution2
+{
+public:
+    bool isSameTree(TreeNode *p, TreeNode *q)
+    {
+        queue<TreeNode *> que;
+        que.push(p);
+        que.push(q);
+
+        while (!que.empty()) {
+            p = que.front();
+            que.pop();
+            q = que.front();
+            que.pop();
+
+            if (!p && !q) continue; // match, both are null tree
+            if (!p || !q) return false; // not match
+            if (p->val != q->val) return false; // not match
+
+            // push null sub tree to queue so that
+            // we could perfectly match
+            que.push(p->left);
+            que.push(q->left);
+
+            que.push(p->right);
+            que.push(q->right);
+        }
+
+        return true;
+    }
+};
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
 
     TreeNode *t1 = new TreeNode(0);
     t1->left = new TreeNode(1);
@@ -64,6 +99,12 @@ int main(int argc, char *argv[])
     cout << sol.isSameTree(t3, t3) << endl;
     cout << sol.isSameTree(t4, t4) << endl;
     cout << sol.isSameTree(t1, t2) << endl;
+
+    cout << sol2.isSameTree(t1, t1) << endl;
+    cout << sol2.isSameTree(t2, t2) << endl;
+    cout << sol2.isSameTree(t3, t3) << endl;
+    cout << sol2.isSameTree(t4, t4) << endl;
+    cout << sol2.isSameTree(t1, t2) << endl;
 
     return 0;
 }

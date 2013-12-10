@@ -91,6 +91,52 @@ public:
     }
 };
 
+// another preorder traversal solution
+class Solution2
+{
+public:
+    void flatten(TreeNode *root)
+    {
+        stack<TreeNode*> s;
+        TreeNode *cur = root;
+        if (!cur) return;
+
+        s.push(cur);
+        while (!s.empty()) {
+            cur = s.top();
+            s.pop();
+
+            if (cur->right) s.push(cur->right);
+            if (cur->left) s.push(cur->left);
+
+            cur->left = nullptr;
+            if (!s.empty())
+                cur->right = s.top();
+        }
+    }
+};
+
+// recursive
+class Solution3
+{
+public:
+    void flatten(TreeNode *root)
+    {
+        flatten(root, nullptr);
+    }
+
+private:
+    // flatten t to list and then connect tail to list end
+    TreeNode* flatten(TreeNode *t, TreeNode *tail)
+    {
+        if (!t) return tail; // tail
+
+        t->right = flatten(t->left, flatten(t->right, tail));
+        t->left = nullptr;
+        return t;
+    }
+};
+
 void print_tree_preorder(TreeNode *root)
 {
     if (root) {
@@ -112,6 +158,8 @@ void print_tree_inorder(TreeNode *root)
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
+    Solution3 sol3;
 
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
@@ -124,7 +172,7 @@ int main(int argc, char *argv[])
     print_tree_inorder(root);
     cout << endl;
 
-    sol.flatten(root);
+    sol3.flatten(root);
 
     print_tree_preorder(root);
     cout << endl;

@@ -60,6 +60,39 @@ public:
 
         return dumbNode.next;
     }
+
+    ListNode *deleteDuplicates2(ListNode *head)
+    {
+        if (head == NULL)
+            return head;
+
+        ListNode dumbNode(-1);
+        dumbNode.next = head;
+        ListNode *prev = &dumbNode;
+
+        ListNode *p1 = head, *p2 = head->next;
+        while (p2) {
+            if (p1->val != p2->val) {
+                prev = p1;
+                p1 = p2;
+                p2 = p2->next;
+            } else { // duplicate
+                while (p2 && p1->val == p2->val) {
+                    p1->next = p2->next;
+                    // delete p2;
+                    p2 = p1->next;
+                }
+
+                prev->next = p1->next;
+                // delete p1;
+                p1 = prev->next;
+                p2 = p1 ? p1->next : nullptr;
+            }
+        }
+
+        return dumbNode.next;
+    }
+
 };
 
 void output_list(ListNode *head)

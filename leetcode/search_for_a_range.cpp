@@ -24,59 +24,44 @@ using namespace std;
 class Solution
 {
 public:
-    bool findLeft(int a[], int n, int target, int &left)
+    bool find(int a[], int n, int target, int &ret, bool isLeft)
     {
         int low = 0, high = n - 1;
+        int mid = 0;
         while (low <= high) {
-            int mid = low + (high - low) / 2;
+            mid = low + (high - low) / 2;
+
             if (a[mid] > target)
                 high = mid - 1;
             else if (a[mid] < target)
                 low = mid + 1;
             else { // a[mid] == target
-                if (a[low] == target) {
-                    left = low; // update lower bound
-                    return true;
+                if (isLeft) { // find lower bound
+                    if (a[low] == target) {
+                        ret = low;
+                        return true;
+                    }
+                    // update boundary to continue find
+                    low += 1;
+                    high = mid;
+                } else { // find upper bound
+                    if (a[high] == target) {
+                        ret = high;
+                        return true;
+                    }
+                    low = mid;
+                    high -= 1;
                 }
-
-                low += 1; // continue find lower bound
-                high = mid;
             }
         }
-
-        return false;
-    }
-
-    bool findRight(int a[], int n, int target, int &right)
-    {
-        int low = 0, high = n - 1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (a[mid] > target)
-                high = mid - 1;
-            else if (a[mid] < target)
-                low = mid + 1;
-            else { // a[mid] == target
-                if (a[high] == target) {
-                    right = high; // update upper bound
-                    return true;
-                }
-                low = mid; // continue find upper bound
-                high -= 1;
-            }
-        }
-
         return false;
     }
 
     vector<int> searchRange(int A[], int n, int target)
     {
-        vector<int> ret;
         int left = -1, right = -1;
-        if (findLeft(A, n, target, left) && findRight(A, n, target, right))
-            ;
-        ret.push_back(left);
-        ret.push_back(right);
+        if (find(A, n, target, left, true)) find(A, n, target, right, false);
+        vector<int> ret = { left, right };
         return ret;
     }
 };
@@ -87,7 +72,10 @@ int main(int argc, char *argv[])
     int a[] = { 5, 7, 7, 8, 8, 10 };
 
     vector<int> ret = sol.searchRange(a, sizeof(a) / sizeof(int), 8);
-    cout << ret[0] << ends << ret[1] << endl;
+    cout << ret[0] << ' ' << ret[1] << endl;
+
+    ret = sol.searchRange(a, sizeof(a) / sizeof(int), 5);
+    cout << ret[0] << ' ' << ret[1] << endl;
 
     return 0;
 }

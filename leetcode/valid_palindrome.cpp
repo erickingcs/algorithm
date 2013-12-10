@@ -49,6 +49,27 @@ public:
         }
         return true;
     }
+
+    bool isPalindrome2(string s)
+    {
+        int len = s.size();
+        if (len <= 1)
+            return true; // be careful
+
+        int start = 0, end = len - 1;
+        while (start < end) {
+            if (!isalnum(s[start])) start++;
+            else if (!isalnum(s[end])) end--;
+            else { // compare two characters
+                if (s[start] != s[end] && abs(s[start] - s[end]) != 32) {
+                    return false;
+                }
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
 };
 
 int main(int argc, char* argv[])
@@ -59,6 +80,9 @@ int main(int argc, char* argv[])
 
     cout << sol.isPalindrome(s1) << endl;
     cout << sol.isPalindrome(s2) << endl;
+
+    cout << sol.isPalindrome2(s1) << endl;
+    cout << sol.isPalindrome2(s2) << endl;
 
     return 0;
 }

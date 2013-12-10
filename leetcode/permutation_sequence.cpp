@@ -51,6 +51,26 @@ public:
     }
 };
 
+/*
+ X=a[n]*(n-1)!+a[n-1]*(n-2)!+...+a[i]*(i-1)!+...+a[2]*1!+a[1]*0!
+ a is integer, and 0<=a[i]<i(1<=i<=n)
+ this equation maps a natural number
+
+ i.e:，3 5 7 4 1 2 9 6 8 maps 98884.
+       because X=2*8!+3*7!+4*6!+2*5!+0*4!+0*3!+2*2!+0*1!+0*0! = 98884.
+
+ why?
+
+ 1) considering first number 3, so there are two numbers(1, 2) less than 3,
+    and permutation leading with them is 8!, so it is 2 * 8!
+ 2) considering 5, there are four numbers(1, 2 ,3 , 4) less than it,
+    and 3 was used in the first item, so there remains 3 numbers usable.
+	that is 3 * 7!
+
+ Application:
+  Give a number(include digit 1...n), we can calculate its postion in permutation.
+
+ */
 class Solution2
 {
 public:
@@ -68,12 +88,13 @@ public:
         if (n < 1 || k < 1)
             return "";
 
-        string orig, ret;
+        string orig(n, '0'), ret;
         for (int i = 1; i <= n; i++) {
-            orig += i + '0';
+            orig[i - 1] += i;
         }
 
-        // Cantor encode, start from 0
+        // Cantor encode, minus one to start from 0
+        // because we will use %
         --k;
         int base = factorial(n - 1); // (n-1)!
 

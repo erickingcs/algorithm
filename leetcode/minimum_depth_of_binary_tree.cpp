@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -25,6 +26,7 @@ struct TreeNode {
     }
 };
 
+// recursively
 class Solution
 {
 public:
@@ -44,9 +46,41 @@ public:
     }
 };
 
+// unrecursively
+class Solution2
+{
+public:
+    int minDepth(TreeNode *root)
+    {
+        if (!root) return 0;
+
+        queue<TreeNode *> q;
+        TreeNode *cur = nullptr;
+        int level = 0, levelSize = 0;
+        q.push(root);
+
+        while (!q.empty()) {
+            if (levelSize == 0 ) {
+                levelSize = q.size();
+                level++;
+            }
+
+            cur = q.front();
+            q.pop();
+            levelSize--;
+
+            if (!cur->left && !cur->right) return level;
+
+            if (cur->left) q.push(cur->left);
+            if (cur->right) q.push(cur->right);
+        }
+    }
+};
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
 
     TreeNode *root = new TreeNode(3);
     root->left = new TreeNode(9);
@@ -59,6 +93,9 @@ int main(int argc, char *argv[])
 
     cout << sol.minDepth(root) << endl;
     cout << sol.minDepth(root2) << endl;
+
+    cout << sol2.minDepth(root) << endl;
+    cout << sol2.minDepth(root2) << endl;
 
     return 0;
 }

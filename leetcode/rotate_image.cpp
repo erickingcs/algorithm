@@ -22,19 +22,19 @@ public:
     void rotate(vector<vector<int>> &matrix)
     {
         int len = matrix.size();
-        if (len <= 0) return;
+        if (len <= 1) return;
 
         // swap counter-diagonal
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len - i - 1; j++) {
-                swap(matrix[i][j], matrix[len - j - 1][len - i - 1]);
+            for (int j = 0; j < len - i; j++) {
+                swap(matrix[i][j], matrix[len - 1 - j][len - 1 - i]);
             }
         }
 
         // swap horizontal middle line
         for (int i = 0; i < len / 2; i++) {
             for (int j = 0; j < len; j++) {
-                swap(matrix[i][j], matrix[len - i - 1][j]);
+                swap(matrix[i][j], matrix[len - 1 - i][j]);
             }
         }
     }

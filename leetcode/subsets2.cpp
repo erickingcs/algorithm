@@ -36,19 +36,22 @@ public:
                               vector<vector<int> > &ret, vector<int> &selection)
     {
         for (int i = start; i <= end; i++) {
+#if 0
             // judge whether it is a repeating number
             bool isDuplicate = false;
             for (int j = start; j < i; j++) {
                 if (v[j] == v[i])
                     isDuplicate = true;
             }
+#endif
+            // v is sorted, so we can judge duplicate
+            // by only comparing with previous element
+            if (i > start && v[i] == v[i - 1]) continue;
 
-            if (!isDuplicate) {
-                selection.push_back(v[i]);
-                ret.push_back(selection);
-                get_non_empty_subset(v, i + 1, end, ret, selection);
-                selection.pop_back();
-            }
+            selection.push_back(v[i]);
+            ret.push_back(selection);
+            get_non_empty_subset(v, i + 1, end, ret, selection);
+            selection.pop_back();
         }
     }
 
@@ -65,12 +68,43 @@ public:
     }
 };
 
+// iterative
+class Solution2
+{
+public:
+    vector<vector<int> > subsetsWithDup(vector<int> &v)
+    {
+        vector<vector<int>> ret(1);
+        sort(v.begin(), v.end()); //make sure small numbers are present first
+
+        size_t previous_size = 0; // avoid duplicate
+
+        for (size_t i = 0; i < v.size(); i++) {
+            size_t curSize = ret.size();
+            // do a copy of current elements and then add one number
+            // to each copied element if no duplicate
+            // the original elements mean we do not choose current number
+            // the copied one mean we choose current number
+            for (size_t j = 0; j < curSize; j++) {
+                // if v[i-1]=v[i] and j<previous_size, we do not extend element
+                // as it is duplicate
+                if (i == 0 || v[i - 1] != v[i] || j >= previous_size) {
+                    ret.push_back(ret[j]); // add one more element
+                    ret.back().push_back(v[i]); // extend it
+                }
+            }
+
+            previous_size = curSize; // not ret.size()
+        }
+        return ret;
+    }
+};
+
 void print_ret(vector<vector<int>> &v)
 {
-    cout << endl;
-    for (auto &v1 : v) {
-        for (auto t : v1)
-            cout << t << ends;
+    for (auto &row : v) {
+        for (auto col : row)
+            cout << col << ' ';
         cout << endl;
     }
 }
@@ -79,8 +113,12 @@ int main(int argc, char* argv[])
 {
     vector<int> v = { 1, 2, 2 };
     Solution sol;
+    Solution2 sol2;
 
     vector<vector<int>> ret = sol.subsetsWithDup(v);
+    print_ret(ret);
+
+    ret = sol2.subsetsWithDup(v);
     print_ret(ret);
 
     return 0;

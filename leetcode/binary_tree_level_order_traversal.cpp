@@ -81,9 +81,43 @@ public:
     }
 };
 
+// recursively
+class Solution2
+{
+public:
+    vector<vector<int>> levelOrder(TreeNode *root)
+    {
+        vector<vector<int>> ret;
+        levelOrder(root, ret, 1);
+        return ret;
+    }
+
+private:
+    void levelOrder(TreeNode *t, vector<vector<int>> &ret, size_t level)
+    {
+        if (!t) return;
+
+        if (level > ret.size()) ret.push_back(vector<int>());
+
+        ret[level - 1].push_back(t->val);
+        levelOrder(t->left, ret, level + 1);
+        levelOrder(t->right, ret, level + 1);
+    }
+};
+
+void print_ret(vector<vector<int>> &ret)
+{
+    for (auto &row : ret) {
+        for (auto col : row)
+            cout << col << ends;
+        cout << endl;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
 
     TreeNode *root = new TreeNode(3);
     root->left = new TreeNode(9);
@@ -92,12 +126,10 @@ int main(int argc, char *argv[])
     root->right->right = new TreeNode(7);
 
     vector<vector<int>> ret = sol.levelOrder(root);
+    print_ret(ret);
 
-    for (auto &row : ret) {
-        for (auto col : row)
-            cout << col << ends;
-        cout << endl;
-    }
+    ret = sol2.levelOrder(root);
+    print_ret(ret);
 
     return 0;
 }

@@ -60,6 +60,23 @@ public:
 
         return sum >= 0 ? start : -1;
     }
+
+    int canCompleteCircuit2(vector<int> &gas, vector<int> &cost)
+    {
+        int total = 0, sum = 0;
+        int start = -1;
+        for (size_t i = 0; i < gas.size(); i++) {
+            total += gas[i] - cost[i];
+            sum += gas[i] - cost[i];
+
+            if (sum < 0) {
+                sum = 0;
+                start = i;
+            }
+        }
+
+        return total >= 0 ? start + 1 : -1;  // =
+    }
 };
 
 int main(int argc, char* argv[])
@@ -77,6 +94,10 @@ int main(int argc, char* argv[])
     cout << sol.canCompleteCircuit(gas1, cost1) << endl;
     cout << sol.canCompleteCircuit(gas2, cost2) << endl;
     cout << sol.canCompleteCircuit(gas3, cost3) << endl;
+
+    cout << sol.canCompleteCircuit2(gas1, cost1) << endl;
+    cout << sol.canCompleteCircuit2(gas2, cost2) << endl;
+    cout << sol.canCompleteCircuit2(gas3, cost3) << endl;
 
     return 0;
 }

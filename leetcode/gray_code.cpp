@@ -29,6 +29,38 @@
 
 using namespace std;
 
+/*
+
+ In the construction of Gray codes, sequences of binary values with the property that
+ consecutive sequence values differ from each other in a single bit position, a number n
+ can be converted into the Gray code value at position n of the sequence simply by taking
+ the exclusive or of n and n/2 (the number formed by shifting n right by a single bit position).
+
+ The reverse operation, decoding a Gray-coded value x into a binary number, is more complicated,
+ but can be expressed as the prefix sum of the bits of x, where each summation operation within the
+ prefix sum is performed modulo two. A prefix sum of this type may be performed efficiently using the
+ bitwise Boolean operations available on modern computers, by computing the exclusive or of x with each
+ of the numbers formed by shifting x to the left by a number of bits that is a power of two.
+
+ // n = n ^ (n/2)
+ unsigned int binaryToGray(unsigned int num)
+ {
+         return (num >> 1) ^ num;
+ }
+
+ // prefix sum
+ unsigned int grayToBinary(unsigned int num)
+ {
+	    unsigned int mask;
+		for (mask = num >> 1; mask != 0; mask = mask >> 1)
+		{
+			num = num ^ mask;
+		}
+		return num;
+ }
+
+ */
+
 class Solution
 {
 public:
@@ -45,8 +77,6 @@ public:
             return vector<int>();
         else if (n == 0) // online judge require it
             return vector<int>(1, 0);
-        else if (n == 1)
-            return vector<int>( { 0, 1 });
         else {
             vector<int> ret = grayCode(n - 1);
             for (int i = ret.size() - 1; i >= 0; i--)

@@ -55,6 +55,7 @@ public:
             sign = -1;
         }
 
+        // could use stoi to convert string to integer
         ret = 0;
         while (i < s.size()) {
             ret = ret * 10 +  s[i] - '0';

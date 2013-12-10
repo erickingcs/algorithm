@@ -95,24 +95,54 @@ public:
         return accumulate(dp[tLen - 1].begin(), dp[tLen - 1].end(), 0);
     }
 };
+
+// dp[i][j] means number of distinct subsequences for T[0...j] in S[0...i]
+// dp[i][j] = dp[i-1][j]               ; not use S[i]
+//          = dp[i-1][j] + dp[i-1][j-1]; S[i] == T[j]
+// dp[i][j] depends on result of above and left, so if calculate from right to left,
+// we can just use one dimension array
+class Solution3
+{
+public:
+    int numDistinct(string S, string T)
+    {
+        if (S.empty() || T.empty()) return 0;
+
+        vector<int> dp(T.size() + 1); // T.size() + 1
+        dp[0] = 1;
+        for (int i = 0; i < S.size(); i++) {
+            for (int j = T.size() - 1; j >= 0; j--) { // right to left
+                dp[j + 1] += (T[j] == S[i] ? dp[j] : 0);
+            }
+        }
+
+        return dp[T.size()];
+    }
+};
+
 int main(int argc, char *argv[])
 {
     Solution sol;
     Solution2 sol2;
+    Solution3 sol3;
+
     string s("rabbbit"), t("rabbit");
     string s2("aabdbaabeeadcbbdedacbbeecbabebaeeecaeabaedadcbdbcdaabebdadbb"
               "aeabdadeaabbabbecebbebcaddaacccebeaeedababedeacdeaaaeeaecbe");
     string t2("bddabdcae");
-
     string s3("b"), t3("a");
+
+    cout << sol.numDistinct(s, t) << endl;
+    cout << sol.numDistinct(s2, t2) << endl;
+    cout << sol.numDistinct(s3, t3) << endl;
 
     cout << sol2.numDistinct(s, t) << endl;
     cout << sol2.numDistinct(s2, t2) << endl;
     cout << sol2.numDistinct(s3, t3) << endl;
 
-    cout << sol.numDistinct(s, t) << endl;
-    cout << sol.numDistinct(s2, t2) << endl;
-    cout << sol.numDistinct(s3, t3) << endl;
+    cout << sol3.numDistinct(s, t) << endl;
+    cout << sol3.numDistinct(s2, t2) << endl;
+    cout << sol3.numDistinct(s3, t3) << endl;
 
     return 0;
 }

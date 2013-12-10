@@ -52,9 +52,54 @@ public:
     }
 };
 
+// double scan from each side
+// time complexity: O(n)
+// space complexity: O(1)
+// @author (http://weibo.com/cpcs)
+class Solution2
+{
+public:
+    int longestValidParentheses(string s)
+    {
+        int answer = 0, depth = 0, start = -1;
+        for (int i = 0; i < s.size(); ++i) {
+            if (s[i] == '(') {
+                ++depth;
+            } else {
+                --depth;
+                if (depth < 0) {
+                    start = i;
+                    depth = 0;
+                } else if (depth == 0) {
+                    answer = max(answer, i - start);
+                }
+            }
+        }
+
+        depth = 0;
+        start = s.size();
+        for (int i = s.size() - 1; i >= 0; --i) {
+            if (s[i] == ')') {
+                ++depth;
+            } else {
+                --depth;
+                if (depth < 0) {
+                    start = i;
+                    depth = 0;
+                } else if (depth == 0) {
+                    answer = max(answer, start - i);
+                }
+            }
+        }
+        return answer;
+    }
+};
+
+
 int main(int argc, char *argv[])
 {
     Solution sol;
+    Solution2 sol2;
     string s1(")()())");
     string s2("()");
     string s3("((((");
@@ -64,6 +109,11 @@ int main(int argc, char *argv[])
     cout << sol.longestValidParentheses(s2) << endl;
     cout << sol.longestValidParentheses(s3) << endl;
     cout << sol.longestValidParentheses(s4) << endl;
+
+    cout << sol2.longestValidParentheses(s1) << endl;
+    cout << sol2.longestValidParentheses(s2) << endl;
+    cout << sol2.longestValidParentheses(s3) << endl;
+    cout << sol2.longestValidParentheses(s4) << endl;
 
     return 0;
 }

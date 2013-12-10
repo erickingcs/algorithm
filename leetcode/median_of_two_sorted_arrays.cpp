@@ -40,19 +40,12 @@ public:
         int pa = min(k / 2, m);
         int pb = k - pa;
 
-        if (a[pa - 1] <= b[pb - 1]) { // kth number is located in either a[pa...m-1] or b[0...n-1]
+        if (a[pa - 1] < b[pb - 1]) { // kth number is located in either a[pa...m-1] or b[0...n-1]
             return findKth(a + pa, m - pa, b, n, k - pa);
-        } else { // kth number is located in either a[0...m-1] to b[pb...n-1]
+        } else if (a[pa - 1] > b[pb - 1]) { // kth number is located in either a[0...m-1] to b[pb...n-1]
             return findKth(a, m, b + pb, n - pb, k - pb);
-        }
-    }
-
-    double findKth(int arr[], int len)
-    {
-        if (len % 2 == 1) {
-            return arr[len / 2];
         } else {
-            return (double) (arr[len / 2 - 1] + arr[len / 2]) / 2; // bug, double
+            return a[pa - 1];
         }
     }
 
@@ -60,8 +53,6 @@ public:
     {
         if (m == 0 && n == 0) { // invalid
             return -1;
-        } else if (m == 0 || n == 0) { // bug
-            return m == 0 ? findKth(B, n) : findKth(A, m);
         }
 
         long long total = m + n; // m + n may overflow

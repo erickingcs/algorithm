@@ -21,37 +21,60 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Solution
 {
 public:
-    void dfs(vector<int> &v, vector<vector<int> > &ret, vector<int> &selection,
+    void dfs(vector<vector<int> > &ret, vector<int> &selection,
              int n, int k)
     {
         if (k == 0) {
             ret.push_back(selection);
         } else {
-            // choose v[i], and select k - 1 elements from v[i-1]...v[0]
+            // choose n, and select k - 1 elements from 1...n-1
             for (int i = n; i >= k; i--) {
-                selection.push_back(v[i - 1]);
-                dfs(v, ret, selection, i - 1, k - 1);  // i - 1
-                selection.pop_back();
+                selection.push_back(i); // choose
+                dfs(ret, selection, i - 1, k - 1);  // i - 1
+                selection.pop_back(); // not choose
             }
         }
     }
 
     vector<vector<int> > combine(int n, int k)
     {
-        vector<int> v;
         vector<vector<int> > ret;
         vector<int> selection;
 
-        for (int i = n; i >= 1; i--)
-            v.push_back(i);
+        dfs(ret, selection, n, k);
+        return ret;
+    }
+};
 
-        dfs(v, ret, selection, n, k);
+// iterative
+class Solution2
+{
+public:
+    vector<vector<int>> combine(int n, int k)
+    {
+        vector<int> num(n);
+        iota(begin(num), end(num), 1);
+
+        vector<vector<int>> ret;
+        vector<int> selection;
+        vector<bool> tag(n, 0);
+        fill_n(begin(tag), k, 1);
+
+        do {
+            for (int i = 0; i < n; i++) {
+                if (tag[i]) selection.push_back(num[i]);
+            }
+
+            ret.push_back(selection);
+            selection.clear();
+        } while (prev_permutation(begin(tag), end(tag)));
         return ret;
     }
 };
@@ -61,7 +84,7 @@ void print_ret(vector<vector<int>> &v)
     cout << endl;
     for (auto &v1 : v) {
         for (auto t : v1)
-            cout << t << ends;
+            cout << t << ' ';
         cout << endl;
     }
 }
@@ -69,7 +92,12 @@ void print_ret(vector<vector<int>> &v)
 int main(int argc, char* argv[])
 {
     Solution sol;
+    Solution2 sol2;
+
     vector<vector<int>> ret = sol.combine(4, 2);
+    print_ret(ret);
+
+    ret = sol2.combine(4, 2);
     print_ret(ret);
 
     return 0;

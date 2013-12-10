@@ -9,6 +9,7 @@
  */
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -28,13 +29,25 @@ public:
 
         return s2;
     }
+
+    int climbStairs2(int n)
+    {
+        if (n == 1)
+            return 1;
+
+        double root5 = sqrt(5);
+        return (1 / root5) * (pow((1 + root5) / 2, n + 1) - pow((1 - root5) / 2, n + 1)); // n + 1
+    }
 };
 
 int main(int argc, char *argv[])
 {
     Solution sol;
 
-    cout << sol.climbStairs(4) << endl;
+    for (int i = 1; i <= 10; i++) {
+        cout << sol.climbStairs(i) << endl;
+        cout << sol.climbStairs2(i) << endl;
+    }
 
     return 0;
 }

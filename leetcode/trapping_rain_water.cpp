@@ -18,6 +18,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <stack>
 
 using namespace std;
 
@@ -55,6 +56,38 @@ public:
 
         return water;
     }
+
+    // using stack to store non-ascending order of elements
+    // if encounter element which is greater than stack top
+    // pop stack and calculate water
+    int trap2(int A[], int n)
+    {
+        stack<pair<int, int>> stk;
+        int water = 0;
+        int i = 0;
+
+        while (i < n) {
+            // push stack
+            if (stk.empty() || stk.top().second >= A[i]) {
+                stk.push(make_pair(i, A[i]));
+                i++;
+            } else { // greater than stack top
+                pair<int, int> p = stk.top();
+                stk.pop();
+
+                // cannot form water
+                if (stk.empty()) {
+                    stk.push(make_pair(i, A[i]));
+                    i++;
+                    continue;
+                }
+
+                // calculate water
+                water += (min(A[i], stk.top().second) - p.second) * (i - stk.top().first - 1);
+            }
+        }
+        return water;
+    }
 };
 
 int main(int argc, char* argv[])
@@ -63,6 +96,9 @@ int main(int argc, char* argv[])
     Solution sol;
 
     int ret = sol.trap(a, end(a) - begin(a));
+    cout << ret << endl;
+
+    ret = sol.trap2(a, end(a) - begin(a));
     cout << ret << endl;
 
     return 0;

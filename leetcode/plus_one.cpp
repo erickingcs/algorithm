@@ -14,17 +14,17 @@ public:
         }
 
         int n = digits.size() - 1;
+        int addition = 1;
         int carry = 0;
-        bool firstTime = true;
         int sum = 0;
 
         do {
-            sum = digits[n] + carry + (firstTime ? 1 : 0);
+            sum = digits[n] + carry + addition;
             digits[n] = sum >= 10 ? (sum - 10) : sum;
             carry = sum >= 10 ? 1 : 0;
 
             n--;
-            firstTime = false;
+            addition = 0;
         } while (carry && n >= 0);
 
         if (carry)

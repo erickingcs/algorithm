@@ -38,6 +38,19 @@ public:
 
         return i + 1;
     }
+
+    int removeDuplicates2(int A[], int n)
+    {
+        if (n <= 2) // n = 0 or 1
+            return n;
+
+        int i = 2, j = 2;
+        for (; j < n; j++)
+            if (A[i - 2] != A[j]) {
+                A[i++] = A[j];
+            }
+        return i;
+    }
 };
 
 int main(int argc, char *argv[])

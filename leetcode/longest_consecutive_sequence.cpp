@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <unordered_set>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -59,6 +60,42 @@ public:
 
         return maxLen;
     }
+
+    int longestConsecutive2(vector<int> &num)
+    {
+        unordered_map<int, bool> used;
+
+        for (auto e : num)
+            used[e] = false;
+
+        int maxLen = 0;
+        int curLen = 0;
+
+        for (auto e : num) {
+            if (used[e]) continue; // already find it
+
+            curLen = 1;
+            used[e] = true;
+
+            int small = e - 1;
+            while (used.find(small) != used.end()) { // little than e
+                curLen++;
+                used[small] = true;
+                small--;
+            }
+
+            int big = e + 1;
+            while (used.find(big) != used.end()) { // greater than e
+                curLen++;
+                used[big] = true;
+                big++;
+            }
+
+            maxLen = max(maxLen, curLen);
+        }
+
+        return maxLen;
+    }
 };
 
 int main(int argc, char* argv[])
@@ -66,7 +103,8 @@ int main(int argc, char* argv[])
     Solution sol;
     vector<int> num = { 100, 4, 200, 1, 3, 2 };
 
-    cout << sol.longestConsecutive(num);
+    cout << sol.longestConsecutive(num) << endl;
+    cout << sol.longestConsecutive2(num) << endl;
 
     return 0;
 }
