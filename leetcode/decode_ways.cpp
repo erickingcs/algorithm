@@ -25,46 +25,49 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int numDecodings(string s) {
-		int len = s.size();
-		if (len == 0 || s[0] == '0') // leading with '0' is invalid
-			return 0;
+    int numDecodings(string s)
+    {
+        int len = s.size();
+        if (len == 0 || s[0] == '0') // leading with '0' is invalid
+            return 0;
 
-		vector<int> dp(len + 1, 0);
-		dp[0] = 1; //
-		dp[1] = 1;
-		for (int i = 2; i <= len; i++) {
-			char prev = s[i - 2], cur = s[i - 1];
+        vector<int> dp(len + 1, 0);
+        dp[0] = 1; //
+        dp[1] = 1;
+        for (int i = 2; i <= len; i++) {
+            char prev = s[i - 2], cur = s[i - 1];
 
-			// s[i-1] is alone
-			if (cur != '0') {  // be careful
-				dp[i] += dp[i - 1];
-			}
+            // s[i-1] is alone
+            if (cur != '0') {  // be careful
+                dp[i] += dp[i - 1];
+            }
 
-			// s[i-2] and s[i-1] decode together
-			if (prev == '1' || (prev == '2' && cur <= '6')) {
-				dp[i] += dp[i - 2];
-			}
-		}
+            // s[i-2] and s[i-1] decode together
+            if (prev == '1' || (prev == '2' && cur <= '6')) {
+                dp[i] += dp[i - 2];
+            }
+        }
 
-		return dp[len];
-	}
+        return dp[len];
+    }
 };
 
-int main(int argc, char *argv[]) {
-	string s1("12");
-	string s2("121");
-	string s3("0");
-	string s4("1210");
+int main(int argc, char *argv[])
+{
+    string s1("12");
+    string s2("121");
+    string s3("0");
+    string s4("1210");
 
-	Solution sol;
+    Solution sol;
 
-	cout << sol.numDecodings(s1) << endl;
-	cout << sol.numDecodings(s2) << endl;
-	cout << sol.numDecodings(s3) << endl;
-	cout << sol.numDecodings(s4) << endl;
+    cout << sol.numDecodings(s1) << endl;
+    cout << sol.numDecodings(s2) << endl;
+    cout << sol.numDecodings(s3) << endl;
+    cout << sol.numDecodings(s4) << endl;
 
-	return 0;
+    return 0;
 }

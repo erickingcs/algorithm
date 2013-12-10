@@ -44,58 +44,62 @@ using namespace std;
 
  */
 
-class Solution {
+class Solution
+{
 public:
-	int symbolToInt(const char c) {
-		switch (c) {
-		case 'I':
-			return 1;
-		case 'V':
-			return 5;
-		case 'X':
-			return 10;
-		case 'L':
-			return 50;
-		case 'C':
-			return 100;
-		case 'D':
-			return 500;
-		case 'M':
-			return 1000;
-		default: // error
-			return -1;
-		}
-	}
+    int symbolToInt(const char c)
+    {
+        switch (c) {
+        case 'I':
+            return 1;
+        case 'V':
+            return 5;
+        case 'X':
+            return 10;
+        case 'L':
+            return 50;
+        case 'C':
+            return 100;
+        case 'D':
+            return 500;
+        case 'M':
+            return 1000;
+        default: // error
+            return -1;
+        }
+    }
 
-	int romanToInt(string s) {
-		int ret = 0;
-		ret += symbolToInt(s[0]); // first symbol
+    int romanToInt(string s)
+    {
+        int ret = 0;
+        ret += symbolToInt(s[0]); // first symbol
 
-		for (size_t i = 1; i < s.size(); ++i) {
-			if (symbolToInt(s[i]) <= symbolToInt(s[i - 1])) { // =
-				ret += symbolToInt(s[i]);
-			} else {
-				// 2 means we need to subtract the previous one
-				// which has already been added to ret
-				ret += symbolToInt(s[i]) - 2 * symbolToInt(s[i - 1]);
-			}
-		}
+        for (size_t i = 1; i < s.size(); ++i) {
+            if (symbolToInt(s[i]) <= symbolToInt(s[i - 1])) { // =
+                ret += symbolToInt(s[i]);
+            } else {
+                // 2 means we need to subtract the previous one
+                // which has already been added to ret
+                ret += symbolToInt(s[i]) - 2 * symbolToInt(s[i - 1]);
+            }
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.romanToInt("I") << endl;
-	cout << sol.romanToInt("II") << endl;
-	cout << sol.romanToInt("IV") << endl;
-	cout << sol.romanToInt("VI") << endl;
-	cout << sol.romanToInt("XIX") << endl;
-	cout << sol.romanToInt("CXIX") << endl;
-	cout << sol.romanToInt("DCCXIX") << endl;
-	cout << sol.romanToInt("MMDCCXIX") << endl;
+    cout << sol.romanToInt("I") << endl;
+    cout << sol.romanToInt("II") << endl;
+    cout << sol.romanToInt("IV") << endl;
+    cout << sol.romanToInt("VI") << endl;
+    cout << sol.romanToInt("XIX") << endl;
+    cout << sol.romanToInt("CXIX") << endl;
+    cout << sol.romanToInt("DCCXIX") << endl;
+    cout << sol.romanToInt("MMDCCXIX") << endl;
 
-	return 0;
+    return 0;
 }

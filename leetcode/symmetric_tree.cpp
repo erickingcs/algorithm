@@ -35,113 +35,122 @@ using namespace std;
 
 //Definition for binary tree
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
+    }
 };
 
 // recursive solution
-class Solution {
+class Solution
+{
 public:
-	bool symmetric(TreeNode *t1, TreeNode *t2) {
-		if (t1 == nullptr && t2 == nullptr)
-			return true;
-		if (!t1 || !t2)
-			return false;
-		if (t1->val != t2->val)
-			return false;
-		return symmetric(t1->left, t2->right) && symmetric(t1->right, t2->left);
-	}
+    bool symmetric(TreeNode *t1, TreeNode *t2)
+    {
+        if (t1 == nullptr && t2 == nullptr)
+            return true;
+        if (!t1 || !t2)
+            return false;
+        if (t1->val != t2->val)
+            return false;
+        return symmetric(t1->left, t2->right) && symmetric(t1->right, t2->left);
+    }
 
-	bool isSymmetric(TreeNode *root) {
-		if (root == nullptr)
-			return true;
-		return symmetric(root->left, root->right);
-	}
+    bool isSymmetric(TreeNode *root)
+    {
+        if (root == nullptr)
+            return true;
+        return symmetric(root->left, root->right);
+    }
 };
 
 // iterative solution
-class Solution2 {
+class Solution2
+{
 public:
-	// whether level node is a palindrome
-	bool isValid(vector<int> &v) {
-		int start = 0, end = v.size() - 1;
-		while (start < end) {
-			if (v[start] != v[end])
-				return false;
-			start++;
-			end--;
-		}
-		return true;
-	}
+    // whether level node is a palindrome
+    bool isValid(vector<int> &v)
+    {
+        int start = 0, end = v.size() - 1;
+        while (start < end) {
+            if (v[start] != v[end])
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
 
-	bool judgeByLevelOrder(TreeNode *root) {
-		queue<TreeNode*> q;
-		TreeNode *cur = root;
-		vector<int> curLevelNode;
+    bool judgeByLevelOrder(TreeNode *root)
+    {
+        queue<TreeNode*> q;
+        TreeNode *cur = root;
+        vector<int> curLevelNode;
 
-		int levelSize = 0;
-		q.push(cur);
-		curLevelNode.push_back(cur->val);
+        int levelSize = 0;
+        q.push(cur);
+        curLevelNode.push_back(cur->val);
 
-		while (!q.empty()) {
-			// judge whether start a new level
-			if (levelSize == 0) {
-				levelSize = q.size();
-				if (!isValid(curLevelNode))
-					return false;
-				curLevelNode.clear();
-			}
+        while (!q.empty()) {
+            // judge whether start a new level
+            if (levelSize == 0) {
+                levelSize = q.size();
+                if (!isValid(curLevelNode))
+                    return false;
+                curLevelNode.clear();
+            }
 
-			cur = q.front();
-			q.pop();
+            cur = q.front();
+            q.pop();
 
-			// add element for this level
-			// INT_MIN is a magic
-			// wish tree nodes do not include it
-			curLevelNode.push_back(cur ? cur->val : INT_MIN);
-			levelSize--;
+            // add element for this level
+            // INT_MIN is a magic
+            // wish tree nodes do not include it
+            curLevelNode.push_back(cur ? cur->val : INT_MIN);
+            levelSize--;
 
-			if (cur) {
-				q.push(cur->left); // push nullptr also
-				q.push(cur->right); // push nullptr also
-			}
-		}
-		return true;
-	}
+            if (cur) {
+                q.push(cur->left); // push nullptr also
+                q.push(cur->right); // push nullptr also
+            }
+        }
+        return true;
+    }
 
-	bool isSymmetric(TreeNode *root) {
-		if (root == nullptr)
-			return true;
-		return judgeByLevelOrder(root);
-	}
+    bool isSymmetric(TreeNode *root)
+    {
+        if (root == nullptr)
+            return true;
+        return judgeByLevelOrder(root);
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	Solution sol2;
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    Solution sol2;
 
-	TreeNode *root = new TreeNode(1);
-	root->left = new TreeNode(2);
-	root->right = new TreeNode(2);
-	root->left->left = new TreeNode(3);
-	root->left->right = new TreeNode(4);
-	root->right->left = new TreeNode(4);
-	root->right->right = new TreeNode(3);
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(2);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(4);
+    root->right->left = new TreeNode(4);
+    root->right->right = new TreeNode(3);
 
-	TreeNode *root2 = new TreeNode(1);
-	root2->left = new TreeNode(2);
-	root2->right = new TreeNode(2);
-	root2->left->left = new TreeNode(3);
+    TreeNode *root2 = new TreeNode(1);
+    root2->left = new TreeNode(2);
+    root2->right = new TreeNode(2);
+    root2->left->left = new TreeNode(3);
 
-	cout << sol.isSymmetric(root) << endl;
-	cout << sol.isSymmetric(root2) << endl;
+    cout << sol.isSymmetric(root) << endl;
+    cout << sol.isSymmetric(root2) << endl;
 
-	cout << sol2.isSymmetric(root) << endl;
-	cout << sol2.isSymmetric(root2) << endl;
+    cout << sol2.isSymmetric(root) << endl;
+    cout << sol2.isSymmetric(root2) << endl;
 
-	return 0;
+    return 0;
 }

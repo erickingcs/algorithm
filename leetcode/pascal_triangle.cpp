@@ -21,41 +21,45 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	vector<vector<int> > generate(int numRows) {
-		if (numRows == 0)
-			return vector<vector<int> >();
+    vector<vector<int> > generate(int numRows)
+    {
+        if (numRows == 0)
+            return vector<vector<int> >();
 
-		vector<vector<int> > ret(numRows);
-		ret[0].push_back(1);
-		for (int i = 1; i < numRows; i++) {
-			for (int j = 0; j <= i; j++) {
-				if (j == 0) // first element
-					ret[i].push_back(ret[i - 1][j]);
-				else if (j == i) // last element
-					ret[i].push_back(ret[i - 1][j - 1]);
-				else // middle elment
-					ret[i].push_back(ret[i - 1][j - 1] + ret[i - 1][j]);
-			}
-		}
+        vector<vector<int> > ret(numRows);
+        ret[0].push_back(1);
+        for (int i = 1; i < numRows; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (j == 0) // first element
+                    ret[i].push_back(ret[i - 1][j]);
+                else if (j == i) // last element
+                    ret[i].push_back(ret[i - 1][j - 1]);
+                else // middle elment
+                    ret[i].push_back(ret[i - 1][j - 1] + ret[i - 1][j]);
+            }
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-void print(vector<vector<int>> v) {
-	for (auto &row : v) {
-		for (auto col : row)
-			cout << col << ends;
-		cout << endl;
-	}
+void print(vector<vector<int>> v)
+{
+    for (auto &row : v) {
+        for (auto col : row)
+            cout << col << ends;
+        cout << endl;
+    }
 }
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	print(sol.generate(5));
+    print(sol.generate(5));
 
-	return 0;
+    return 0;
 }

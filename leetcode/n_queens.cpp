@@ -33,74 +33,80 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 private:
-	vector<vector<string>> ret;
+    vector<vector<string>> ret;
 public:
-	void generate_result(vector<int> &row) {
-		vector<string> t;
-		for (int i = 1; i < row.size(); i++) {
-			string tmp;
-			for (int j = 1; j < row.size(); j++)
-				if (j == row[i])
-					tmp += 'Q';
-				else
-					tmp += '.';
-			t.push_back(tmp);
-		}
+    void generate_result(vector<int> &row)
+    {
+        vector<string> t;
+        for (int i = 1; i < row.size(); i++) {
+            string tmp;
+            for (int j = 1; j < row.size(); j++)
+                if (j == row[i])
+                    tmp += 'Q';
+                else
+                    tmp += '.';
+            t.push_back(tmp);
+        }
 
-		ret.push_back(t);
-	}
+        ret.push_back(t);
+    }
 
-	bool judge(vector<int> &row) {
-		for (int i = 1; i < row.size(); i++) {
-			if (row[i] == 0) // no queen, continue
-				continue;
-			for (int j = i + 1; j < row.size(); j++) {
-				if (row[j] == 0) // no queen, continue
-					continue;
-				if (row[i] == row[j] || abs(row[i] - row[j]) == abs(i - j)) // attack
-					return false;
-			}
-		}
+    bool judge(vector<int> &row)
+    {
+        for (int i = 1; i < row.size(); i++) {
+            if (row[i] == 0) // no queen, continue
+                continue;
+            for (int j = i + 1; j < row.size(); j++) {
+                if (row[j] == 0) // no queen, continue
+                    continue;
+                if (row[i] == row[j] || abs(row[i] - row[j]) == abs(i - j)) // attack
+                    return false;
+            }
+        }
 
-		return true; // no attack
-	}
+        return true; // no attack
+    }
 
-	//  backtrack
-	void dfs(vector<int> &row, int start, int end) {
-		if (start > end) {
-			generate_result(row);
-			return;
-		} else { // start <= end
-			for (int i = 1; i <= end; i++) {
-				row[start] = i;
-				if (judge(row))
-					dfs(row, start + 1, end);
-				row[start] = 0; // reset queen place
-			}
-		}
-	}
+    //  backtrack
+    void dfs(vector<int> &row, int start, int end)
+    {
+        if (start > end) {
+            generate_result(row);
+            return;
+        } else { // start <= end
+            for (int i = 1; i <= end; i++) {
+                row[start] = i;
+                if (judge(row))
+                    dfs(row, start + 1, end);
+                row[start] = 0; // reset queen place
+            }
+        }
+    }
 
-	vector<vector<string> > solveNQueens(int n) {
-		vector<int> row(n + 1); // row[i] store the Queen's place of row i
+    vector<vector<string> > solveNQueens(int n)
+    {
+        vector<int> row(n + 1); // row[i] store the Queen's place of row i
 
-		ret.clear();
-		dfs(row, 1, n);
-		return ret;
-	}
+        ret.clear();
+        dfs(row, 1, n);
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	vector<vector<string>> ret = sol.solveNQueens(8);
+    vector<vector<string>> ret = sol.solveNQueens(8);
 
-	for (auto &v : ret) {
-		for (auto s : v)
-			cout << s << endl;
-		cout << endl;
-	}
+    for (auto &v : ret) {
+        for (auto s : v)
+            cout << s << endl;
+        cout << endl;
+    }
 
-	return 0;
+    return 0;
 }

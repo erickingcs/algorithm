@@ -32,71 +32,77 @@ using namespace std;
  */
 
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 private:
-	int sum;
+    int sum;
 public:
-	void calSum(vector<TreeNode*> &v) {
-		int t = 0;
-		for (auto e : v)
-			t = t * 10 + e->val;
-		sum += t;
-	}
+    void calSum(vector<TreeNode*> &v)
+    {
+        int t = 0;
+        for (auto e : v)
+            t = t * 10 + e->val;
+        sum += t;
+    }
 
-	int getSum(TreeNode *t) {
-		vector<TreeNode*> v;
-		TreeNode *p = t;
-		TreeNode *prev = nullptr;
-		sum = 0;
+    int getSum(TreeNode *t)
+    {
+        vector<TreeNode*> v;
+        TreeNode *p = t;
+        TreeNode *prev = nullptr;
+        sum = 0;
 
-		// post order un-recursive traverse tree
-		// when encounter a leaf, path was stored in vector array
-		while (p || !v.empty()) {
-			if (p) {
-				v.push_back(p);
-				p = p->left;
-			} else {
-				p = v.back();
-				if (p->right && p->right != prev) {
-					p = p->right;
-					v.push_back(p);
-					p = p->left;
-				} else {
-					if (!p->left && !p->right)
-						calSum(v); // leaf, accumulate path to sum
-					v.pop_back();
-					prev = p;
-					p = nullptr;
-				}
-			}
-		}
+        // post order un-recursive traverse tree
+        // when encounter a leaf, path was stored in vector array
+        while (p || !v.empty()) {
+            if (p) {
+                v.push_back(p);
+                p = p->left;
+            } else {
+                p = v.back();
+                if (p->right && p->right != prev) {
+                    p = p->right;
+                    v.push_back(p);
+                    p = p->left;
+                } else {
+                    if (!p->left && !p->right)
+                        calSum(v); // leaf, accumulate path to sum
+                    v.pop_back();
+                    prev = p;
+                    p = nullptr;
+                }
+            }
+        }
 
-		return sum;
-	}
+        return sum;
+    }
 
-	int sumNumbers(TreeNode *root) {
-		if (root == nullptr)
-			return 0;
-		return getSum(root);
-	}
+    int sumNumbers(TreeNode *root)
+    {
+        if (root == nullptr)
+            return 0;
+        return getSum(root);
+    }
 };
 
-int main(int argc, char* argv[]) {
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    Solution sol;
 
-	TreeNode *root = new TreeNode(1);
-	root->left = new TreeNode(2);
-	root->right = new TreeNode(3);
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
 
-	cout << sol.sumNumbers(root) << endl;
+    cout << sol.sumNumbers(root) << endl;
 
-	return 0;
+    return 0;
 }

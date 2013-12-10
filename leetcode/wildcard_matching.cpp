@@ -26,66 +26,69 @@
 #include <iostream>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	bool isMatch(const char *s, const char *p) {
-		if (s == nullptr && p == nullptr)
-			return true;
-		if (s == nullptr || p == nullptr)
-			return false;
+    bool isMatch(const char *s, const char *p)
+    {
+        if (s == nullptr && p == nullptr)
+            return true;
+        if (s == nullptr || p == nullptr)
+            return false;
 
-		const char* star = nullptr;
-		const char* lastPos = nullptr;
+        const char* star = nullptr;
+        const char* lastPos = nullptr;
 
-		while (*s) {
-			// equal, continue
-			if (*s == *p || *p == '?') {
-				s++;
-				p++;
-				continue;
-			}
+        while (*s) {
+            // equal, continue
+            if (*s == *p || *p == '?') {
+                s++;
+                p++;
+                continue;
+            }
 
-			// first time encounter star
-			// keep star position and s position
-			// let star stands for zero char and continue comparison
-			if (*p == '*') {
-				star = p;
-				lastPos = s;
-				p++;
-				continue;
-			}
+            // first time encounter star
+            // keep star position and s position
+            // let star stands for zero char and continue comparison
+            if (*p == '*') {
+                star = p;
+                lastPos = s;
+                p++;
+                continue;
+            }
 
-			// if mismatch, find previous star if exist
-			// and let s + 1, which means star stands for one more char in s
-			// reset p to continue comparison
-			if (star) {
-				s = ++lastPos;
-				p = star + 1;
-				continue;
-			}
+            // if mismatch, find previous star if exist
+            // and let s + 1, which means star stands for one more char in s
+            // reset p to continue comparison
+            if (star) {
+                s = ++lastPos;
+                p = star + 1;
+                continue;
+            }
 
-			// mismatch
-			return false;
-		}
+            // mismatch
+            return false;
+        }
 
-		// when get to the end of s
-		// guarantee p has only * in the end
-		while (*p == '*')
-			p++;
-		return !*p;
-	}
+        // when get to the end of s
+        // guarantee p has only * in the end
+        while (*p == '*')
+            p++;
+        return !*p;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.isMatch("aa", "a") << endl;
-	cout << sol.isMatch("aa", "aa") << endl;
-	cout << sol.isMatch("aaa", "aa") << endl;
-	cout << sol.isMatch("aa", "*") << endl;
-	cout << sol.isMatch("aa", "a*") << endl;
-	cout << sol.isMatch("ab", "?*") << endl;
-	cout << sol.isMatch("aab", "c*a*b") << endl;
+    cout << sol.isMatch("aa", "a") << endl;
+    cout << sol.isMatch("aa", "aa") << endl;
+    cout << sol.isMatch("aaa", "aa") << endl;
+    cout << sol.isMatch("aa", "*") << endl;
+    cout << sol.isMatch("aa", "a*") << endl;
+    cout << sol.isMatch("ab", "?*") << endl;
+    cout << sol.isMatch("aab", "c*a*b") << endl;
 
-	return 0;
+    return 0;
 }

@@ -19,44 +19,50 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 private:
-	vector<string> d2c; // digit to char map
+    vector<string> d2c; // digit to char map
 public:
-	Solution() :
-			d2c( { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv",
-					"wxyz" }) {
-	}
+    Solution() :
+        d2c( { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv",
+        "wxyz"
+    })
+    {
+    }
 
-	vector<string> letterCombinations(string digits) {
-		int len = digits.size();
-		vector<string> ret;
+    vector<string> letterCombinations(string digits)
+    {
+        int len = digits.size();
+        vector<string> ret;
 
-		dfs(digits, ret, "", 0, len);
+        dfs(digits, ret, "", 0, len);
 
-		return ret;
-	}
+        return ret;
+    }
 
-	void dfs(string &digits, vector<string> &ret, string s, int start, // s, not &s
-			int end) {
-		if (start == end) {
-			ret.push_back(s);
-		} else {
-			int index = digits[start] - '0';
-			for (int i = 0; i < d2c[index].size(); i++)
-				dfs(digits, ret, s + d2c[index][i], start + 1, end);
-		}
-	}
+    void dfs(string &digits, vector<string> &ret, string s, int start, // s, not &s
+             int end)
+    {
+        if (start == end) {
+            ret.push_back(s);
+        } else {
+            int index = digits[start] - '0';
+            for (int i = 0; i < d2c[index].size(); i++)
+                dfs(digits, ret, s + d2c[index][i], start + 1, end);
+        }
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	string s("23");
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    string s("23");
 
-	vector<string> ret = sol.letterCombinations(s);
+    vector<string> ret = sol.letterCombinations(s);
 
-	for (auto t : ret)
-		cout << t << ends;
+    for (auto t : ret)
+        cout << t << ends;
 
-	return 0;
+    return 0;
 }

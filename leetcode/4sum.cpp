@@ -28,56 +28,61 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// O(n^3)
-	vector<vector<int> > fourSum(vector<int> &num, int target) {
-		set<vector<int> > ret; //eliminate duplicate cases
-		int i, j, len = num.size();
+    // O(n^3)
+    vector<vector<int> > fourSum(vector<int> &num, int target)
+    {
+        set<vector<int> > ret; //eliminate duplicate cases
+        int i, j, len = num.size();
 
-		sort(num.begin(), num.end());
-		for (i = 0; i < len - 3; i++) {
-			for (j = i + 1; j < len - 2; j++) {
-				int start = j + 1, end = len - 1;
-				int sum = 0;
-				// two pointers move toward each other. O(n)
-				while (start < end) {
-					sum = num[i] + num[j] + num[start] + num[end];
-					if (sum == target) {
-						vector<int> selection = { num[i], num[j], num[start],
-								num[end] };
-						ret.insert(selection);
-						//continue find other combinations leading with num[i] such that sum == 0
-						start++;
-						end--;
-					} else if (sum < target) {
-						start++;
-					} else {
-						end--;
-					}
-				}
-			}
-		}
+        sort(num.begin(), num.end());
+        for (i = 0; i < len - 3; i++) {
+            for (j = i + 1; j < len - 2; j++) {
+                int start = j + 1, end = len - 1;
+                int sum = 0;
+                // two pointers move toward each other. O(n)
+                while (start < end) {
+                    sum = num[i] + num[j] + num[start] + num[end];
+                    if (sum == target) {
+                        vector<int> selection = { num[i], num[j], num[start],
+                                                  num[end]
+                                                };
+                        ret.insert(selection);
+                        //continue find other combinations leading with num[i] such that sum == 0
+                        start++;
+                        end--;
+                    } else if (sum < target) {
+                        start++;
+                    } else {
+                        end--;
+                    }
+                }
+            }
+        }
 
-		return vector<vector<int>>(ret.begin(), ret.end());
-	}
+        return vector<vector<int>>(ret.begin(), ret.end());
+    }
 };
 
-void print_ret(vector<vector<int>> &v) {
-	for (auto &v1 : v) {
-		for (auto t : v1)
-			cout << t << ends;
-		cout << endl;
-	}
+void print_ret(vector<vector<int>> &v)
+{
+    for (auto &v1 : v) {
+        for (auto t : v1)
+            cout << t << ends;
+        cout << endl;
+    }
 }
 
-int main(int argc, char* argv[]) {
-	vector<int> v = { 1, 0, -1, 0, -2, 2 };
-	int target = 0;
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    vector<int> v = { 1, 0, -1, 0, -2, 2 };
+    int target = 0;
+    Solution sol;
 
-	vector<vector<int> > ret = sol.fourSum(v, target);
-	print_ret(ret);
+    vector<vector<int> > ret = sol.fourSum(v, target);
+    print_ret(ret);
 
-	return 0;
+    return 0;
 }

@@ -24,57 +24,60 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	string convert(string s, int nRows) {
-		if (nRows <= 0)
-			return ""; // invalid
+    string convert(string s, int nRows)
+    {
+        if (nRows <= 0)
+            return ""; // invalid
 
-		int len = s.size();
-		if (nRows == 1 || len <= 1)
-			return s;
+        int len = s.size();
+        if (nRows == 1 || len <= 1)
+            return s;
 
-		int t = nRows + nRows - 2; // char number of " |/ "
-		int nCols = (s.size() / t + 1) * (nRows - 1); // enough to store zigzag
-		vector<vector<char>> v(nRows, vector<char>(nCols));
+        int t = nRows + nRows - 2; // char number of " |/ "
+        int nCols = (s.size() / t + 1) * (nRows - 1); // enough to store zigzag
+        vector<vector<char>> v(nRows, vector<char>(nCols));
 
-		int row = 0, col = 0;
-		bool down = true;
-		for (int i = 0; i < len; i++) {
-			if (down) { // fill char downward
-				v[row][col] = s[i];
-				row++;
-				if (row == nRows) { // reverse tag
-					row--;
-					down = false;
-				}
-			} else { // upper right
-				row--;
-				col++;
-				v[row][col] = s[i];
-				if (row == 0) { // reverse tag
-					row++;
-					down = true;
-				}
-			}
-		}
+        int row = 0, col = 0;
+        bool down = true;
+        for (int i = 0; i < len; i++) {
+            if (down) { // fill char downward
+                v[row][col] = s[i];
+                row++;
+                if (row == nRows) { // reverse tag
+                    row--;
+                    down = false;
+                }
+            } else { // upper right
+                row--;
+                col++;
+                v[row][col] = s[i];
+                if (row == 0) { // reverse tag
+                    row++;
+                    down = true;
+                }
+            }
+        }
 
-		// get output
-		string ret;
-		for (auto &row : v)
-			for (auto t : row)
-				if (t)
-					ret += t;
+        // get output
+        string ret;
+        for (auto &row : v)
+            for (auto t : row)
+                if (t)
+                    ret += t;
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	string s("PAYPALISHIRING");
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    string s("PAYPALISHIRING");
 
-	cout << sol.convert(s, 3) << endl;
+    cout << sol.convert(s, 3) << endl;
 
-	return 0;
+    return 0;
 }

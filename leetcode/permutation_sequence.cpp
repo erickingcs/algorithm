@@ -27,72 +27,78 @@
 using namespace std;
 
 // TLE
-class Solution {
+class Solution
+{
 public:
-	string getPermutation(int n, int k) {
-		string ret;
-		if (k <= 0)
-			return ret;
+    string getPermutation(int n, int k)
+    {
+        string ret;
+        if (k <= 0)
+            return ret;
 
-		vector<int> v(n);
-		iota(v.begin(), v.end(), 1);
+        vector<int> v(n);
+        iota(v.begin(), v.end(), 1);
 
-		while (--k) {
-			next_permutation(v.begin(), v.end());
-		}
+        while (--k) {
+            next_permutation(v.begin(), v.end());
+        }
 
-		for (auto t : v) {
-			ret += t + '0';
-		}
+        for (auto t : v) {
+            ret += t + '0';
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-class Solution2 {
+class Solution2
+{
 public:
-	long long factorial(int n) {
-		long long product = 1;
-		for (int i = 2; i <= n; i++) {
-			product *= i;
-		}
-		return product;
-	}
+    long long factorial(int n)
+    {
+        long long product = 1;
+        for (int i = 2; i <= n; i++) {
+            product *= i;
+        }
+        return product;
+    }
 
-	string getPermutation(int n, int k) {
-		if (n < 1 || k < 1)
-			return "";
+    string getPermutation(int n, int k)
+    {
+        if (n < 1 || k < 1)
+            return "";
 
-		string orig, ret;
-		for (int i = 1; i <= n; i++) {
-			orig += i + '0';
-		}
+        string orig, ret;
+        for (int i = 1; i <= n; i++) {
+            orig += i + '0';
+        }
 
-		// Cantor encode, start from 0
-		--k;
-		int base = factorial(n - 1); // (n-1)!
+        // Cantor encode, start from 0
+        --k;
+        int base = factorial(n - 1); // (n-1)!
 
-		for (int i = n - 1; i > 0; k %= base, base /= i, --i) {
-			// judge it belongs to which permutation
-			// the sub permu, leading with orig[sub]
-			int sub = k / base;
-			ret += orig[sub];
-			orig.erase(sub, 1);
-		}
-		ret += orig[0]; // i == 0, the last one
+        for (int i = n - 1; i > 0; k %= base, base /= i, --i) {
+            // judge it belongs to which permutation
+            // the sub permu, leading with orig[sub]
+            int sub = k / base;
+            ret += orig[sub];
+            orig.erase(sub, 1);
+        }
+        ret += orig[0]; // i == 0, the last one
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	Solution2 sol2;
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    Solution2 sol2;
 
-	for (int i = 1; i <= 6; i++) {
-		cout << sol.getPermutation(3, i) << endl;
-		cout << sol2.getPermutation(3, i) << endl;
-	}
+    for (int i = 1; i <= 6; i++) {
+        cout << sol.getPermutation(3, i) << endl;
+        cout << sol2.getPermutation(3, i) << endl;
+    }
 
-	return 0;
+    return 0;
 }

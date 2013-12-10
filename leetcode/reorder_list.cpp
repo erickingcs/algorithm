@@ -17,101 +17,109 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
 void print_list(ListNode *head);
 
-class Solution {
+class Solution
+{
 public:
-	// reverse list in place
-	ListNode* reverse_list(ListNode *head) {
-		if (head == nullptr)
-			return nullptr;
+    // reverse list in place
+    ListNode* reverse_list(ListNode *head)
+    {
+        if (head == nullptr)
+            return nullptr;
 
-		ListNode *prev = nullptr;
-		ListNode *cur = head;
-		ListNode *next = nullptr;
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        ListNode *next = nullptr;
 
-		while (cur) {
-			next = cur->next;
-			cur->next = prev;
-			prev = cur;
-			cur = next;
-		}
+        while (cur) {
+            next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
 
-		return prev;
-	}
+        return prev;
+    }
 
-	// cut list into two lists from the middle point
-	// the first list is equal or one bigger than the second one
-	// return the second list
-	ListNode* split_list(ListNode *head) {
-		ListNode dumbNode(-1);
-		dumbNode.next = head;
-		ListNode *p = &dumbNode, *q = p;
+    // cut list into two lists from the middle point
+    // the first list is equal or one bigger than the second one
+    // return the second list
+    ListNode* split_list(ListNode *head)
+    {
+        ListNode dumbNode(-1);
+        dumbNode.next = head;
+        ListNode *p = &dumbNode, *q = p;
 
-		while (q && q->next) {
-			p = p->next;
-			q = q->next->next;
-		}
+        while (q && q->next) {
+            p = p->next;
+            q = q->next->next;
+        }
 
-		q = p->next;
-		p->next = nullptr;
-		return q;
-	}
+        q = p->next;
+        p->next = nullptr;
+        return q;
+    }
 
-	void merge_list(ListNode *l1, ListNode *l2) {
-		ListNode *p = l1, *q = nullptr;
-		while (l2) {
-			q = l2;
-			l2 = l2->next;
+    void merge_list(ListNode *l1, ListNode *l2)
+    {
+        ListNode *p = l1, *q = nullptr;
+        while (l2) {
+            q = l2;
+            l2 = l2->next;
 
-			// insert list
-			q->next = p->next;
-			p->next = q;
+            // insert list
+            q->next = p->next;
+            p->next = q;
 
-			p = p->next->next;
-		}
-	}
+            p = p->next->next;
+        }
+    }
 
-	void reorderList(ListNode *head) {
-		if (head == nullptr || head->next == nullptr)
-			return;
+    void reorderList(ListNode *head)
+    {
+        if (head == nullptr || head->next == nullptr)
+            return;
 
-		ListNode *l1 = head;
-		ListNode *l2 = nullptr;
+        ListNode *l1 = head;
+        ListNode *l2 = nullptr;
 
-		// l2 won't be null here
-		l2 = split_list(l1);
-		l2 = reverse_list(l2);
-		merge_list(l1, l2);
-	}
+        // l2 won't be null here
+        l2 = split_list(l1);
+        l2 = reverse_list(l2);
+        merge_list(l1, l2);
+    }
 };
 
-void print_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
-	cout << endl;
+void print_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *list = new ListNode(1);
-	list->next = new ListNode(2);
-	list->next->next = new ListNode(3);
-	list->next->next->next = new ListNode(4);
-	list->next->next->next->next = new ListNode(5);
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    ListNode *list = new ListNode(1);
+    list->next = new ListNode(2);
+    list->next->next = new ListNode(3);
+    list->next->next->next = new ListNode(4);
+    list->next->next->next->next = new ListNode(5);
+    Solution sol;
 
-	print_list(list);
-	sol.reorderList(list);
-	print_list(list);
+    print_list(list);
+    sol.reorderList(list);
+    print_list(list);
 
-	return 0;
+    return 0;
 }

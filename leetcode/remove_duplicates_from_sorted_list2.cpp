@@ -20,67 +20,72 @@ using namespace std;
  * Definition for singly-linked list.
  */
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	ListNode *deleteDuplicates(ListNode *head) {
-		if (head == NULL)
-			return head;
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        if (head == NULL)
+            return head;
 
-		ListNode dumbNode(-1);
-		dumbNode.next = head;
-		ListNode *prev = &dumbNode;
+        ListNode dumbNode(-1);
+        dumbNode.next = head;
+        ListNode *prev = &dumbNode;
 
-		ListNode *p1 = head, *p2 = head->next;
-		while (p2) {
-			while (p2 && p1->val == p2->val)
-				p2 = p2->next;
+        ListNode *p1 = head, *p2 = head->next;
+        while (p2) {
+            while (p2 && p1->val == p2->val)
+                p2 = p2->next;
 
-			if (p1->next != p2) { // delete duplicate
-				prev->next = p2;
-				if (!p2)
-					return dumbNode.next; // no more element
-				p1 = p2;
-				p2 = p2->next;
-			} else {
-				prev = p1;
-				p1 = p1->next;
-				p2 = p2->next;
-			}
-		}
+            if (p1->next != p2) { // delete duplicate
+                prev->next = p2;
+                if (!p2)
+                    return dumbNode.next; // no more element
+                p1 = p2;
+                p2 = p2->next;
+            } else {
+                prev = p1;
+                p1 = p1->next;
+                p2 = p2->next;
+            }
+        }
 
-		return dumbNode.next;
-	}
+        return dumbNode.next;
+    }
 };
 
-void output_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
+void output_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
 
-	cout << endl;
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *head = new ListNode(1);
-	head->next = new ListNode(1);
-	head->next->next = new ListNode(2);
-	head->next->next->next = new ListNode(2);
-	//head->next->next->next->next = new ListNode(3);
+int main(int argc, char *argv[])
+{
+    ListNode *head = new ListNode(1);
+    head->next = new ListNode(1);
+    head->next->next = new ListNode(2);
+    head->next->next->next = new ListNode(2);
+    //head->next->next->next->next = new ListNode(3);
 
-	output_list(head);
+    output_list(head);
 
-	Solution sol;
-	ListNode *ret = sol.deleteDuplicates(head);
+    Solution sol;
+    ListNode *ret = sol.deleteDuplicates(head);
 
-	output_list(ret);
+    output_list(ret);
 
-	return 0;
+    return 0;
 }

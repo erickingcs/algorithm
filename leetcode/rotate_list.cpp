@@ -25,96 +25,102 @@ using namespace std;
  * Definition for singly-linked list.
  */
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	ListNode *rotateRight(ListNode *head, int k) {
-		if (head == NULL || k <= 0) return head;
+    ListNode *rotateRight(ListNode *head, int k)
+    {
+        if (head == NULL || k <= 0) return head;
 
-		ListNode *start = head, *end = head;
-		int cnt = 1;
+        ListNode *start = head, *end = head;
+        int cnt = 1;
 
-		// count the list node as k might be greater than it
-		// After that, end will be the last element, not NULL
-		while (end->next) {
-			cnt++;
-			end = end->next;
-		}
+        // count the list node as k might be greater than it
+        // After that, end will be the last element, not NULL
+        while (end->next) {
+            cnt++;
+            end = end->next;
+        }
 
-		k = k % cnt; // calculate move number
-		k = cnt - k; //  [1, cnt - k]
+        k = k % cnt; // calculate move number
+        k = cnt - k; //  [1, cnt - k]
 
-		// form a circle
-		end->next = start;
+        // form a circle
+        end->next = start;
 
-		// find the new head
-		while (--k) {
-			start = start->next;
-		}
-		head = start->next;
-		start->next = NULL;
+        // find the new head
+        while (--k) {
+            start = start->next;
+        }
+        head = start->next;
+        start->next = NULL;
 
-		return head;
-	}
+        return head;
+    }
 
-	ListNode *rotateRight2(ListNode *head, int k) {
-		if (head == nullptr || k <= 0) return head;
+    ListNode *rotateRight2(ListNode *head, int k)
+    {
+        if (head == nullptr || k <= 0) return head;
 
-		ListNode dumbNode(-1);
-		dumbNode.next = head;
-		ListNode *end = head;
-		int cnt = 1;
+        ListNode dumbNode(-1);
+        dumbNode.next = head;
+        ListNode *end = head;
+        int cnt = 1;
 
-		// count the list node as k might be greater than it
-		// After that, end will be the last element, not NULL
-		while (end->next) {
-			cnt++;
-			end = end->next;
-		}
+        // count the list node as k might be greater than it
+        // After that, end will be the last element, not NULL
+        while (end->next) {
+            cnt++;
+            end = end->next;
+        }
 
-		k = k % cnt; // calculate move number
-		k = cnt - k; //  [1, cnt - k]
+        k = k % cnt; // calculate move number
+        k = cnt - k; //  [1, cnt - k]
 
         // find the split point
-		// after that, cur->next is the new head
-		ListNode *cur = head;
-		while (--k) {
-			cur = cur->next;
-		}
+        // after that, cur->next is the new head
+        ListNode *cur = head;
+        while (--k) {
+            cur = cur->next;
+        }
 
-		end->next = dumbNode.next;
-		dumbNode.next = cur->next;
-		cur->next = nullptr;
+        end->next = dumbNode.next;
+        dumbNode.next = cur->next;
+        cur->next = nullptr;
 
-		return dumbNode.next;
-	}
+        return dumbNode.next;
+    }
 };
 
-void print_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
-	cout << endl;
+void print_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *list = new ListNode(1);
-	list->next = new ListNode(2);
-	list->next->next = new ListNode(3);
-	list->next->next->next = new ListNode(4);
-	list->next->next->next->next = new ListNode(5);
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    ListNode *list = new ListNode(1);
+    list->next = new ListNode(2);
+    list->next->next = new ListNode(3);
+    list->next->next->next = new ListNode(4);
+    list->next->next->next->next = new ListNode(5);
+    Solution sol;
 
-	print_list(list);
-	ListNode *ret = sol.rotateRight2(list, 2);
-	print_list(ret);
+    print_list(list);
+    ListNode *ret = sol.rotateRight2(list, 2);
+    print_list(ret);
 
-	return 0;
+    return 0;
 }

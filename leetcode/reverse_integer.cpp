@@ -28,48 +28,52 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 private:
-	bool invalid;
+    bool invalid;
 public:
-	Solution() :
-			invalid(false) {
-	}
+    Solution() :
+        invalid(false)
+    {
+    }
 
-	int reverse(int x) {
-		invalid = false;
-		bool minus = false;
-		long long ret = 0;
-		long long t = x;
+    int reverse(int x)
+    {
+        invalid = false;
+        bool minus = false;
+        long long ret = 0;
+        long long t = x;
 
-		if (t < 0) {
-			minus = true;
-			t = -t;
-		}
+        if (t < 0) {
+            minus = true;
+            t = -t;
+        }
 
-		while (t) {
-			ret = ret * 10 + t % 10;
-			t /= 10;
-		}
+        while (t) {
+            ret = ret * 10 + t % 10;
+            t /= 10;
+        }
 
-		if (ret > INT_MAX) {
-			invalid = true;
-			return 0;
-		} else {
-			return minus ? -ret : ret;
-		}
-	}
+        if (ret > INT_MAX) {
+            invalid = true;
+            return 0;
+        } else {
+            return minus ? -ret : ret;
+        }
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.reverse(0) << endl;
-	cout << sol.reverse(123) << endl;
-	cout << sol.reverse(-123) << endl;
-	cout << sol.reverse(12300) << endl;
-	cout << sol.reverse(-12300) << endl;
-	cout << sol.reverse(9999999LL) << endl;
+    cout << sol.reverse(0) << endl;
+    cout << sol.reverse(123) << endl;
+    cout << sol.reverse(-123) << endl;
+    cout << sol.reverse(12300) << endl;
+    cout << sol.reverse(-12300) << endl;
+    cout << sol.reverse(9999999LL) << endl;
 
-	return 0;
+    return 0;
 }

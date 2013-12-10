@@ -25,50 +25,55 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	void dfs(vector<int> &candidates, int start, int end,
-			vector<vector<int> > &ret, vector<int> &selection, int target) {
-		if (target == 0) {
-			ret.push_back(selection);
-		} else {
-			for (int i = start; i <= end; i++) {
-				int t = target - candidates[i];
-				if (t >= 0) {
-					selection.push_back(candidates[i]);
-					dfs(candidates, i, end, ret, selection, t);
-					selection.pop_back();
-				}
-			}
-		}
-	}
+    void dfs(vector<int> &candidates, int start, int end,
+             vector<vector<int> > &ret, vector<int> &selection, int target)
+    {
+        if (target == 0) {
+            ret.push_back(selection);
+        } else {
+            for (int i = start; i <= end; i++) {
+                int t = target - candidates[i];
+                if (t >= 0) {
+                    selection.push_back(candidates[i]);
+                    dfs(candidates, i, end, ret, selection, t);
+                    selection.pop_back();
+                }
+            }
+        }
+    }
 
-	vector<vector<int>> combinationSum(vector<int> &candidates, int target) {
-		vector<vector<int> > ret;
-		vector<int> selection;
+    vector<vector<int>> combinationSum(vector<int> &candidates, int target)
+    {
+        vector<vector<int> > ret;
+        vector<int> selection;
 
-		// sort to make sure small numbers are present first
-		sort(candidates.begin(), candidates.end());
-		dfs(candidates, 0, candidates.size() - 1, ret, selection, target);
-		return ret;
-	}
+        // sort to make sure small numbers are present first
+        sort(candidates.begin(), candidates.end());
+        dfs(candidates, 0, candidates.size() - 1, ret, selection, target);
+        return ret;
+    }
 };
 
-void print_ret(vector<vector<int>> &v) {
-	for (auto &row : v) {
-		for (auto col : row)
-			cout << col << ends;
-		cout << endl;
-	}
+void print_ret(vector<vector<int>> &v)
+{
+    for (auto &row : v) {
+        for (auto col : row)
+            cout << col << ends;
+        cout << endl;
+    }
 }
 
-int main(int argc, char* argv[]) {
-	vector<int> v = { 7, 6, 3, 2 };
-	int target = 7;
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    vector<int> v = { 7, 6, 3, 2 };
+    int target = 7;
+    Solution sol;
 
-	vector<vector<int>> ret = sol.combinationSum(v, target);
-	print_ret(ret);
+    vector<vector<int>> ret = sol.combinationSum(v, target);
+    print_ret(ret);
 
-	return 0;
+    return 0;
 }

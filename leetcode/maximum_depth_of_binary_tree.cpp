@@ -15,35 +15,39 @@ using namespace std;
 
 //Definition for binary tree
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
-};
-
-class Solution {
-public:
-    int maxDepth(TreeNode *root) {
-    	if (root == nullptr) return 0;
-    	int leftDepth = maxDepth(root->left);
-    	int rightDepth = maxDepth(root->right);
-
-    	return max(leftDepth, rightDepth) + 1;
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
     }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+class Solution
+{
+public:
+    int maxDepth(TreeNode *root)
+    {
+        if (root == nullptr) return 0;
+        int leftDepth = maxDepth(root->left);
+        int rightDepth = maxDepth(root->right);
 
-	TreeNode *root = new TreeNode(1);
-	root->left = new TreeNode(2);
-	root->right = new TreeNode(3);
-	root->left->left = new TreeNode(4);
-	root->right->right = new TreeNode(5);
+        return max(leftDepth, rightDepth) + 1;
+    }
+};
 
-	cout << sol.maxDepth(root) << endl;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	return 0;
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->right->right = new TreeNode(5);
+
+    cout << sol.maxDepth(root) << endl;
+
+    return 0;
 }

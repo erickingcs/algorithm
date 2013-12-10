@@ -12,26 +12,29 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int climbStairs(int n) {
-		if (n == 1)
-			return 1; // bug
-		int s1 = 1, s2 = 2;
-		for (int i = 3; i <= n; i++) {
-			int t = s1 + s2;
-			s1 = s2;
-			s2 = t;
-		}
+    int climbStairs(int n)
+    {
+        if (n == 1)
+            return 1; // bug
+        int s1 = 1, s2 = 2;
+        for (int i = 3; i <= n; i++) {
+            int t = s1 + s2;
+            s1 = s2;
+            s2 = t;
+        }
 
-		return s2;
-	}
+        return s2;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.climbStairs(4) << endl;
+    cout << sol.climbStairs(4) << endl;
 
-	return 0;
+    return 0;
 }

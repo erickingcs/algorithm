@@ -19,77 +19,82 @@
 
 using namespace std;
 
-class Solution {
-	public:
-		int cal(string &s, int n1, int n2) {
-			char ch = s[0];
-			switch (ch) {
-				case '+':
-					return n1 + n2;
-				case '-':
-					return n1 - n2;
-				case '*':
-					return n1 * n2;
-				case '/':
-					return n1 / n2;
-				default:
-					return -1; // invalid arithmetic
-			};
-		}
+class Solution
+{
+public:
+    int cal(string &s, int n1, int n2)
+    {
+        char ch = s[0];
+        switch (ch) {
+        case '+':
+            return n1 + n2;
+        case '-':
+            return n1 - n2;
+        case '*':
+            return n1 * n2;
+        case '/':
+            return n1 / n2;
+        default:
+            return -1; // invalid arithmetic
+        };
+    }
 
-		bool isNum(string &s, int &ret) {
-			// consider s is not empty and valid here
-			// do not consider overflow
+    bool isNum(string &s, int &ret)
+    {
+        // consider s is not empty and valid here
+        // do not consider overflow
 
-			if (s == "+" || s == "-" || s == "*" || s == "/") return false;
+        if (s == "+" || s == "-" || s == "*" || s == "/") return false;
 
-			// may not need
-			int sign = 1;
-			size_t i = 0;
-			if (s[0] == '+') i++;
-			if (s[0] == '-') {
-				i++;
-				sign = -1;
-			}
+        // may not need
+        int sign = 1;
+        size_t i = 0;
+        if (s[0] == '+') i++;
+        if (s[0] == '-') {
+            i++;
+            sign = -1;
+        }
 
-			ret = 0;
-			while (i < s.size()) {
-				ret = ret * 10 +  s[i] - '0';
-				i++;
-			}
+        ret = 0;
+        while (i < s.size()) {
+            ret = ret * 10 +  s[i] - '0';
+            i++;
+        }
 
-			ret *= sign;
+        ret *= sign;
 
-			return true;
-		}
+        return true;
+    }
 
-		int evalRPN(vector<string> &tokens) {
-			vector<int> num;
+    int evalRPN(vector<string> &tokens)
+    {
+        vector<int> num;
 
-			int ret = 0;
-			for (auto e : tokens) {
-				if (isNum(e, ret)) num.push_back(ret);
-				else {
-					int n2 = num.back();
-					num.pop_back();
-					int n1 = num.back();
-					num.pop_back();
-					num.push_back(cal(e, n1, n2));
-				}
-			}
-			return num[0];
-		}
+        int ret = 0;
+        for (auto e : tokens) {
+            if (isNum(e, ret)) num.push_back(ret);
+            else {
+                int n2 = num.back();
+                num.pop_back();
+                int n1 = num.back();
+                num.pop_back();
+                num.push_back(cal(e, n1, n2));
+            }
+        }
+        return num[0];
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	vector<string> v1 = {"2", "1", "+", "3", "*"}; // 9
-	vector<string> v2 = {"4", "13", "5", "/", "+"}; // 6
+    vector<string> v1 = {"2", "1", "+", "3", "*"}; // 9
+    vector<string> v2 = {"4", "13", "5", "/", "+"}; // 6
 
-	cout << sol.evalRPN(v1) << endl;
-	cout << sol.evalRPN(v2) << endl;
+    cout << sol.evalRPN(v1) << endl;
+    cout << sol.evalRPN(v2) << endl;
 
-	return 0;
+    return 0;
 
 }

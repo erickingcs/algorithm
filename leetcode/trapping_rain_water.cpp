@@ -21,46 +21,49 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// O(n)
-	int trap(int A[], int n) {
-		int *pbegin = A, *pend = A + n;
-		int *pmax = max_element(pbegin, pend);
-		int h = 0, water = 0;
+    // O(n)
+    int trap(int A[], int n)
+    {
+        int *pbegin = A, *pend = A + n;
+        int *pmax = max_element(pbegin, pend);
+        int h = 0, water = 0;
 
-		// calculate from left to max
-		// either update height or accumulate water
-		for (; pbegin < pmax; pbegin++) {
-			if (*pbegin > h)
-				h = *pbegin;
-			else {
-				water += h - *pbegin;
-			}
-		}
+        // calculate from left to max
+        // either update height or accumulate water
+        for (; pbegin < pmax; pbegin++) {
+            if (*pbegin > h)
+                h = *pbegin;
+            else {
+                water += h - *pbegin;
+            }
+        }
 
-		// calculate from right to max
-		// either update height or accumulate water
-		h = 0;
-		--pend;
-		for (; pend > pmax; pend--) {
-			if (*pend > h)
-				h = *pend;
-			else {
-				water += h - *pend;
-			}
-		}
+        // calculate from right to max
+        // either update height or accumulate water
+        h = 0;
+        --pend;
+        for (; pend > pmax; pend--) {
+            if (*pend > h)
+                h = *pend;
+            else {
+                water += h - *pend;
+            }
+        }
 
-		return water;
-	}
+        return water;
+    }
 };
 
-int main(int argc, char* argv[]) {
-	int a[] = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    int a[] = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+    Solution sol;
 
-	int ret = sol.trap(a, end(a) - begin(a));
-	cout << ret << endl;
+    int ret = sol.trap(a, end(a) - begin(a));
+    cout << ret << endl;
 
-	return 0;
+    return 0;
 }

@@ -23,63 +23,68 @@ using namespace std;
  * Definition for singly-linked list.
  */
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	ListNode *removeNthFromEnd(ListNode *head, int n) {
-		if (head == NULL || n <= 0)
-			return head;
+    ListNode *removeNthFromEnd(ListNode *head, int n)
+    {
+        if (head == NULL || n <= 0)
+            return head;
 
-		ListNode dumbNode(-1);
-		ListNode *p = &dumbNode;
-		p->next = head;
-		ListNode *q = p->next;  // q points to head
+        ListNode dumbNode(-1);
+        ListNode *p = &dumbNode;
+        p->next = head;
+        ListNode *q = p->next;  // q points to head
 
-		while (n-- && q)
-			q = q->next;
+        while (n-- && q)
+            q = q->next;
 
-		if (n > 0)
-			return head; // n beyond list size, invalid
+        if (n > 0)
+            return head; // n beyond list size, invalid
 
-		while (q) {
-			p = p->next;
-			q = q->next;
-		}
-		
-		// dumb node makes it easy
-		// delete, regardless of whether it is first, middle or last node
-		p->next = p->next->next; 
-		return dumbNode.next;
-	}
+        while (q) {
+            p = p->next;
+            q = q->next;
+        }
+
+        // dumb node makes it easy
+        // delete, regardless of whether it is first, middle or last node
+        p->next = p->next->next;
+        return dumbNode.next;
+    }
 };
 
-void output_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
-	cout << endl;
+void output_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *head = new ListNode(1);
-	head->next = new ListNode(2);
-	head->next->next = new ListNode(3);
-	head->next->next->next = new ListNode(4);
-	head->next->next->next->next = new ListNode(5);
+int main(int argc, char *argv[])
+{
+    ListNode *head = new ListNode(1);
+    head->next = new ListNode(2);
+    head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(4);
+    head->next->next->next->next = new ListNode(5);
 
-	output_list(head);
+    output_list(head);
 
-	Solution sol;
-	ListNode *ret = sol.removeNthFromEnd(head, 1);
+    Solution sol;
+    ListNode *ret = sol.removeNthFromEnd(head, 1);
 
-	output_list(ret);
+    output_list(ret);
 
-	return 0;
+    return 0;
 }

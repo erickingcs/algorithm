@@ -20,34 +20,37 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int lengthOfLastWord(const char *s) {
-		if (s == NULL)
-			return 0;
+    int lengthOfLastWord(const char *s)
+    {
+        if (s == NULL)
+            return 0;
 
-		int len = strlen(s) - 1;
-		int last_word_len = 0;
+        int len = strlen(s) - 1;
+        int last_word_len = 0;
 
-		while (len >= 0 && s[len] == ' ')
-			len--;
+        while (len >= 0 && s[len] == ' ')
+            len--;
 
-		while (len >= 0) {
-			if (s[len] == ' ')
-				return last_word_len;
-			len--;
-			last_word_len++;
-		}
+        while (len >= 0) {
+            if (s[len] == ' ')
+                return last_word_len;
+            len--;
+            last_word_len++;
+        }
 
-		return last_word_len;
-	}
+        return last_word_len;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	const char *s = "Hello World";
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    const char *s = "Hello World";
+    Solution sol;
 
-	cout << sol.lengthOfLastWord(s) << endl;
+    cout << sol.lengthOfLastWord(s) << endl;
 
-	return 0;
+    return 0;
 }

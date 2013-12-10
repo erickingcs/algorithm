@@ -28,65 +28,70 @@ using namespace std;
 
 // Definition for binary tree
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	int getPathSum(vector<int> &v) {
-		return accumulate(v.begin(), v.end(), 0);
-	}
+    int getPathSum(vector<int> &v)
+    {
+        return accumulate(v.begin(), v.end(), 0);
+    }
 
-	bool hasPathSum(TreeNode *root, int sum) {
-		stack<TreeNode*> s;
-		vector<int> v;
-		TreeNode *cur = root, *prev = nullptr;
+    bool hasPathSum(TreeNode *root, int sum)
+    {
+        stack<TreeNode*> s;
+        vector<int> v;
+        TreeNode *cur = root, *prev = nullptr;
 
-		// postorder traverse tree
-		while (cur || !s.empty()) {
-			if (cur) {
-				s.push(cur);
-				v.push_back(cur->val);
-				cur = cur->left;
-			} else {
-				cur = s.top();
+        // postorder traverse tree
+        while (cur || !s.empty()) {
+            if (cur) {
+                s.push(cur);
+                v.push_back(cur->val);
+                cur = cur->left;
+            } else {
+                cur = s.top();
 
-				if (cur->right && cur->right != prev) {
-					cur = cur->right;
-					s.push(cur);
-					v.push_back(cur->val);
-					cur = cur->left;
-				} else {
-					s.pop();
-					if (!cur->left && !cur->right && getPathSum(v) == sum)
-						return true;
-					v.pop_back();
-					prev = cur;
-					cur = nullptr;
-				}
-			}
-		}
+                if (cur->right && cur->right != prev) {
+                    cur = cur->right;
+                    s.push(cur);
+                    v.push_back(cur->val);
+                    cur = cur->left;
+                } else {
+                    s.pop();
+                    if (!cur->left && !cur->right && getPathSum(v) == sum)
+                        return true;
+                    v.pop_back();
+                    prev = cur;
+                    cur = nullptr;
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	TreeNode *root = new TreeNode(1);
-	root->left = new TreeNode(2);
-	root->right = new TreeNode(3);
-	root->left->left = new TreeNode(4);
-	root->right->right = new TreeNode(5);
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->right->right = new TreeNode(5);
 
-	cout << sol.hasPathSum(root, 7) << endl;
-	cout << sol.hasPathSum(root, 4) << endl;
+    cout << sol.hasPathSum(root, 7) << endl;
+    cout << sol.hasPathSum(root, 4) << endl;
 
-	return 0;
+    return 0;
 }

@@ -20,32 +20,35 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int searchInsert(int A[], int n, int target) {
-		if (n <= 0)
-			return -1;
+    int searchInsert(int A[], int n, int target)
+    {
+        if (n <= 0)
+            return -1;
 
-		int i;
-		for (i = 0; i < n; i++) {
-			if (A[i] == target)
-				return i;
-			if (A[i] > target)
-				break;
-		}
+        int i;
+        for (i = 0; i < n; i++) {
+            if (A[i] == target)
+                return i;
+            if (A[i] > target)
+                break;
+        }
 
-		return i;
-	}
+        return i;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	int a[] = { 1, 3, 5, 6 };
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    int a[] = { 1, 3, 5, 6 };
 
-	cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 5) << endl;
-	cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 2) << endl;
-	cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 7) << endl;
-	cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 0) << endl;
+    cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 5) << endl;
+    cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 2) << endl;
+    cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 7) << endl;
+    cout << sol.searchInsert(a, sizeof(a) / sizeof(int), 0) << endl;
 
-	return 0;
+    return 0;
 }

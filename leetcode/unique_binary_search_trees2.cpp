@@ -24,74 +24,80 @@
 using namespace std;
 
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-	vector<TreeNode *> generate(int start, int end) {
-		vector<TreeNode *> subTree;
-		if (start > end) { // empty tree
-			subTree.push_back(nullptr);
-			return subTree;
-		}
+    vector<TreeNode *> generate(int start, int end)
+    {
+        vector<TreeNode *> subTree;
+        if (start > end) { // empty tree
+            subTree.push_back(nullptr);
+            return subTree;
+        }
 
-		// let k be root, and construct left/right sub tree recursively
-		for (int k = start; k <= end; k++) {
-			vector<TreeNode *> leftSubTree = generate(start, k - 1); // construct left sub tree
-			vector<TreeNode *> rightSubTree = generate(k + 1, end); // construct right sub tree
+        // let k be root, and construct left/right sub tree recursively
+        for (int k = start; k <= end; k++) {
+            vector<TreeNode *> leftSubTree = generate(start, k - 1); // construct left sub tree
+            vector<TreeNode *> rightSubTree = generate(k + 1, end); // construct right sub tree
 
-			// construct tree
-			for (auto left : leftSubTree) {
-				for (auto right : rightSubTree) {
-					TreeNode *root = new TreeNode(k); //  create root node
-					root->left = left;
-					root->right = right;
-					subTree.push_back(root);
-				}
-			}
-		}
+            // construct tree
+            for (auto left : leftSubTree) {
+                for (auto right : rightSubTree) {
+                    TreeNode *root = new TreeNode(k); //  create root node
+                    root->left = left;
+                    root->right = right;
+                    subTree.push_back(root);
+                }
+            }
+        }
 
-		return subTree;
-	}
+        return subTree;
+    }
 
-    vector<TreeNode *> generateTrees(int n) {
-		if (n < 0 ) return vector<TreeNode *>();
+    vector<TreeNode *> generateTrees(int n)
+    {
+        if (n < 0 ) return vector<TreeNode *>();
 
-		// bug: n == 0, empty tree, vector must have one nullptr element
-		return generate(1, n);
+        // bug: n == 0, empty tree, vector must have one nullptr element
+        return generate(1, n);
     }
 };
 
-void print_tree_preorder(TreeNode *root) {
-	if (root) {
-		cout << root->val << ' ';
-		print_tree_preorder(root->left);
-		print_tree_preorder(root->right);
-	}
+void print_tree_preorder(TreeNode *root)
+{
+    if (root) {
+        cout << root->val << ' ';
+        print_tree_preorder(root->left);
+        print_tree_preorder(root->right);
+    }
 }
 
-void print_tree_inorder(TreeNode *root) {
-	if (root) {
-		print_tree_inorder(root->left);
-		cout << root->val << ' ';
-		print_tree_inorder(root->right);
-	}
+void print_tree_inorder(TreeNode *root)
+{
+    if (root) {
+        print_tree_inorder(root->left);
+        cout << root->val << ' ';
+        print_tree_inorder(root->right);
+    }
 }
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	vector<TreeNode *> ret = sol.generateTrees(3);
-	for (auto e : ret) {
-		print_tree_preorder(e);
-		cout << endl << "----------------" << endl;
-		print_tree_inorder(e);
-		cout << endl << "================" << endl;
-	}
+    vector<TreeNode *> ret = sol.generateTrees(3);
+    for (auto e : ret) {
+        print_tree_preorder(e);
+        cout << endl << "----------------" << endl;
+        print_tree_inorder(e);
+        cout << endl << "================" << endl;
+    }
 
-	return 0;
+    return 0;
 }

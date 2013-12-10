@@ -15,27 +15,30 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int maxProfit(vector<int> &prices) {
-		int max_profit = 0;
-		int min_ele = INT_MAX;
-		for (int i = 0; i < prices.size(); i++) {
-			if (prices[i] < min_ele)
-				min_ele = prices[i];
-			else {
-				max_profit = max(max_profit, prices[i] - min_ele);
-			}
-		}
-		return max_profit;
-	}
+    int maxProfit(vector<int> &prices)
+    {
+        int max_profit = 0;
+        int min_ele = INT_MAX;
+        for (int i = 0; i < prices.size(); i++) {
+            if (prices[i] < min_ele)
+                min_ele = prices[i];
+            else {
+                max_profit = max(max_profit, prices[i] - min_ele);
+            }
+        }
+        return max_profit;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	vector<int> v = { 1, 2, 6, 3, 9 };
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    vector<int> v = { 1, 2, 6, 3, 9 };
+    Solution sol;
 
-	cout << sol.maxProfit(v) << endl;
-	return 0;
+    cout << sol.maxProfit(v) << endl;
+    return 0;
 }
 

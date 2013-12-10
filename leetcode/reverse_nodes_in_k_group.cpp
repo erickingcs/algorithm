@@ -24,68 +24,74 @@ using namespace std;
  * Definition for singly-linked list.
  */
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	// reverse nodes between pre and end, both are not included
-	ListNode* reverse(ListNode* pre, ListNode* end) {
-		ListNode* last = pre->next; // last is the next previous node
-		ListNode* cur = last->next; // pointer to current node to be reversed
+    // reverse nodes between pre and end, both are not included
+    ListNode* reverse(ListNode* pre, ListNode* end)
+    {
+        ListNode* last = pre->next; // last is the next previous node
+        ListNode* cur = last->next; // pointer to current node to be reversed
 
-		while (cur != end) {
-			last->next = cur->next; //
-			cur->next = pre->next;
-			pre->next = cur;
+        while (cur != end) {
+            last->next = cur->next; //
+            cur->next = pre->next;
+            pre->next = cur;
 
-			cur = last->next;
-		}
+            cur = last->next;
+        }
 
-		return last;
-	}
+        return last;
+    }
 
-	ListNode *reverseKGroup(ListNode *head, int k) {
-		ListNode dumbNode(0);
-		dumbNode.next = head;
-		ListNode* pre = &dumbNode, *cur = head;
+    ListNode *reverseKGroup(ListNode *head, int k)
+    {
+        ListNode dumbNode(0);
+        dumbNode.next = head;
+        ListNode* pre = &dumbNode, *cur = head;
 
-		int i = 0;
-		while (cur) {
-			if (++i % k == 0) {
-				pre = reverse(pre, cur->next); // next
-				cur = pre->next;
-			} else
-				cur = cur->next;
-		}
+        int i = 0;
+        while (cur) {
+            if (++i % k == 0) {
+                pre = reverse(pre, cur->next); // next
+                cur = pre->next;
+            } else
+                cur = cur->next;
+        }
 
-		return dumbNode.next;
-	}
+        return dumbNode.next;
+    }
 };
 
-void print_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
-	cout << endl;
+void print_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *list = new ListNode(1);
-	list->next = new ListNode(2);
-	list->next->next = new ListNode(3);
-	list->next->next->next = new ListNode(4);
-	list->next->next->next->next = new ListNode(5);
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    ListNode *list = new ListNode(1);
+    list->next = new ListNode(2);
+    list->next->next = new ListNode(3);
+    list->next->next->next = new ListNode(4);
+    list->next->next->next->next = new ListNode(5);
+    Solution sol;
 
-	print_list(list);
-	ListNode *ret = sol.reverseKGroup(list, 2);
-	print_list(ret);
+    print_list(list);
+    ListNode *ret = sol.reverseKGroup(list, 2);
+    print_list(ret);
 
-	return 0;
+    return 0;
 }

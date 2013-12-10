@@ -20,52 +20,57 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// brute force; cannot psss OJ
-	bool wordBreak1(string s, unordered_set<string> &dict) {
-		if (s.empty())
-			return true; //
-		for (int i = 0; i < s.length(); i++) {
-			if (dict.find(s.substr(0, i + 1)) != dict.end()
-					&& wordBreak1(s.substr(i + 1), dict))
-				return true;
-		}
-		return false;
-	}
+    // brute force; cannot psss OJ
+    bool wordBreak1(string s, unordered_set<string> &dict)
+    {
+        if (s.empty())
+            return true; //
+        for (int i = 0; i < s.length(); i++) {
+            if (dict.find(s.substr(0, i + 1)) != dict.end()
+                    && wordBreak1(s.substr(i + 1), dict))
+                return true;
+        }
+        return false;
+    }
 
-	// dp
-	bool wordBreak2(string s, unordered_set<string> &dict) {
-		vector<bool> dp(s.length() + 1, false);
-		dp[0] = true;
-		for (int i = 1; i <= s.length(); i++) {
-			for (int j = i - 1; j >= 0; j--) {
-				if (dp[j] == true
-						&& dict.find(s.substr(j, i - j)) != dict.end()) {
-					dp[i] = true;
-					break; //
-				}
-			}
-		}
-		return dp[s.length()];
-	}
+    // dp
+    bool wordBreak2(string s, unordered_set<string> &dict)
+    {
+        vector<bool> dp(s.length() + 1, false);
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (dp[j] == true
+                        && dict.find(s.substr(j, i - j)) != dict.end()) {
+                    dp[i] = true;
+                    break; //
+                }
+            }
+        }
+        return dp[s.length()];
+    }
 };
 
-int main(int argc, char* argv[]) {
-	string s1("leetcode");
-	unordered_set<string> dict1 = { "leet", "code" };
+int main(int argc, char* argv[])
+{
+    string s1("leetcode");
+    unordered_set<string> dict1 = { "leet", "code" };
 
-	string s2("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-			"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-			"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
-	unordered_set<string> dict2 = { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa",
-			"aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa" };
+    string s2("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
+    unordered_set<string> dict2 = { "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa",
+                                    "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"
+                                  };
 
-	Solution sol;
-	cout << sol.wordBreak1(s1, dict1) << endl;
-	cout << sol.wordBreak2(s1, dict1) << endl;
+    Solution sol;
+    cout << sol.wordBreak1(s1, dict1) << endl;
+    cout << sol.wordBreak2(s1, dict1) << endl;
 
-	// cout << sol.wordBreak1(s2, dict2) << endl;
-	cout << sol.wordBreak2(s2, dict2) << endl;
-	return 0;
+    // cout << sol.wordBreak1(s2, dict2) << endl;
+    cout << sol.wordBreak2(s2, dict2) << endl;
+    return 0;
 }

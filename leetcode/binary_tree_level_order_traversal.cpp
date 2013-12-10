@@ -30,70 +30,74 @@ using namespace std;
 
 //Definition for binary tree
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	vector<vector<int> > levelOrder(TreeNode *root) {
-		queue<TreeNode*> q;
-		TreeNode *cur = root;
-		vector<vector<int>> ret;
+    vector<vector<int> > levelOrder(TreeNode *root)
+    {
+        queue<TreeNode*> q;
+        TreeNode *cur = root;
+        vector<vector<int>> ret;
 
-		if (cur == nullptr)
-			return ret;
-		else
-			q.push(cur);
+        if (cur == nullptr)
+            return ret;
+        else
+            q.push(cur);
 
-		int levelSize = 0;
-		int sub = -1;
+        int levelSize = 0;
+        int sub = -1;
 
-		while (!q.empty()) {
-			// judge whether start a new level
-			if (levelSize == 0) {
-				levelSize = q.size();
-				sub++;
-				ret.push_back(vector<int>()); //
-			}
+        while (!q.empty()) {
+            // judge whether start a new level
+            if (levelSize == 0) {
+                levelSize = q.size();
+                sub++;
+                ret.push_back(vector<int>()); //
+            }
 
-			cur = q.front();
-			q.pop();
+            cur = q.front();
+            q.pop();
 
-			// add element for this level
-			ret[sub].push_back(cur->val);
-			levelSize--;
+            // add element for this level
+            ret[sub].push_back(cur->val);
+            levelSize--;
 
-			if (cur->left != nullptr)
-				q.push(cur->left);
-			if (cur->right != nullptr)
-				q.push(cur->right);
-		}
+            if (cur->left != nullptr)
+                q.push(cur->left);
+            if (cur->right != nullptr)
+                q.push(cur->right);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	TreeNode *root = new TreeNode(3);
-	root->left = new TreeNode(9);
-	root->right = new TreeNode(20);
-	root->right->left = new TreeNode(15);
-	root->right->right = new TreeNode(7);
+    TreeNode *root = new TreeNode(3);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right = new TreeNode(7);
 
-	vector<vector<int>> ret = sol.levelOrder(root);
+    vector<vector<int>> ret = sol.levelOrder(root);
 
-	for (auto &row : ret) {
-		for (auto col : row)
-			cout << col << ends;
-		cout << endl;
-	}
+    for (auto &row : ret) {
+        for (auto col : row)
+            cout << col << ends;
+        cout << endl;
+    }
 
-	return 0;
+    return 0;
 }

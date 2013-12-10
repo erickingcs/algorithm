@@ -24,68 +24,72 @@
 using namespace std;
 
 struct Interval {
-	int start;
-	int end;
-	Interval() : start(0), end(0) {}
-	Interval(int s, int e) : start(s), end(e) {}
+    int start;
+    int end;
+    Interval() : start(0), end(0) {}
+    Interval(int s, int e) : start(s), end(e) {}
 };
 
 // Oj: 696 ms
 // will try union find data structure later
-class Solution {
-	public:
-		vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
-			if (intervals.empty()) { // may be removed this if
-				intervals.push_back(newInterval);
-				return intervals;
-			}
+class Solution
+{
+public:
+    vector<Interval> insert(vector<Interval> &intervals, Interval newInterval)
+    {
+        if (intervals.empty()) { // may be removed this if
+            intervals.push_back(newInterval);
+            return intervals;
+        }
 
-			auto ite = intervals.begin();
-			while (ite != intervals.end()) {
-				if (ite->start > newInterval.end) {  // insert and return, no need to merge
-					intervals.insert(ite, newInterval);
-					return intervals;
-				} else if (ite->end < newInterval.start) { // find propert position to insert
-					ite++;
-				} else { // delete merged item and update insert item
-					newInterval.start = min(ite->start, newInterval.start);
-					newInterval.end = max(ite->end, newInterval.end);
-					ite = intervals.erase(ite);
-				}
-			}
+        auto ite = intervals.begin();
+        while (ite != intervals.end()) {
+            if (ite->start > newInterval.end) {  // insert and return, no need to merge
+                intervals.insert(ite, newInterval);
+                return intervals;
+            } else if (ite->end < newInterval.start) { // find propert position to insert
+                ite++;
+            } else { // delete merged item and update insert item
+                newInterval.start = min(ite->start, newInterval.start);
+                newInterval.end = max(ite->end, newInterval.end);
+                ite = intervals.erase(ite);
+            }
+        }
 
-			// we merged to the last element
-			intervals.push_back(newInterval);
-			return intervals;
-		}
+        // we merged to the last element
+        intervals.push_back(newInterval);
+        return intervals;
+    }
 };
 
-void print_vector(vector<Interval> &v) {
-	for (auto e : v) {
-		cout << e.start << " " << e.end << endl;
-	}
+void print_vector(vector<Interval> &v)
+{
+    for (auto e : v) {
+        cout << e.start << " " << e.end << endl;
+    }
 }
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	vector<Interval> v1;
-	v1.push_back(Interval(1, 3));
-	v1.push_back(Interval(6, 9));
+    vector<Interval> v1;
+    v1.push_back(Interval(1, 3));
+    v1.push_back(Interval(6, 9));
 
-	sol.insert(v1, Interval(2, 5));
-	print_vector(v1);
+    sol.insert(v1, Interval(2, 5));
+    print_vector(v1);
 
-	vector<Interval> v2;
-	v2.push_back(Interval(1, 2));
-	v2.push_back(Interval(3, 5));
-	v2.push_back(Interval(6, 7));
-	v2.push_back(Interval(8, 10));
-	v2.push_back(Interval(12, 16));
+    vector<Interval> v2;
+    v2.push_back(Interval(1, 2));
+    v2.push_back(Interval(3, 5));
+    v2.push_back(Interval(6, 7));
+    v2.push_back(Interval(8, 10));
+    v2.push_back(Interval(12, 16));
 
-	sol.insert(v2, Interval(4, 9));
-	print_vector(v2);
+    sol.insert(v2, Interval(4, 9));
+    print_vector(v2);
 
-	return 0;
+    return 0;
 
 }

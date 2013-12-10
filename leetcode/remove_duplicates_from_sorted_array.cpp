@@ -20,33 +20,36 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int removeDuplicates(int A[], int n) {
-		if (n <= 1) // n = 0 or 1
-			return n;
+    int removeDuplicates(int A[], int n)
+    {
+        if (n <= 1) // n = 0 or 1
+            return n;
 
-		int i = 0, j = 1;
-		while (j < n) {
-			if (A[j] == A[i])
-				j++;
-			else {
-				A[++i] = A[j++];
-			}
-		}
+        int i = 0, j = 1;
+        while (j < n) {
+            if (A[j] == A[i])
+                j++;
+            else {
+                A[++i] = A[j++];
+            }
+        }
 
-		return i + 1;
-	}
+        return i + 1;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	int a[3] = { 1, 1, 2 };
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    int a[3] = { 1, 1, 2 };
 
-	cout << sol.removeDuplicates(a, 3) << endl;
+    cout << sol.removeDuplicates(a, 3) << endl;
 
-	for (auto t : a)
-		cout << t << ends;
+    for (auto t : a)
+        cout << t << ends;
 
-	return 0;
+    return 0;
 }

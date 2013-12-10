@@ -44,38 +44,43 @@ using namespace std;
 
  */
 
-class Solution {
+class Solution
+{
 public:
-	string intToRoman(int num) {
-		const int radix[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4,
-				1 };
-		const string symbol[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL",
-				"X", "IX", "V", "IV", "I" };
+    string intToRoman(int num)
+    {
+        const int radix[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4,
+                              1
+                            };
+        const string symbol[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL",
+                                  "X", "IX", "V", "IV", "I"
+                                };
 
-		string ret;
-		for (int i = 0; num > 0; ++i) {
-			int cnt = num / radix[i];
-			num %= radix[i];
-			while (cnt--)
-				ret += symbol[i];
-		}
+        string ret;
+        for (int i = 0; num > 0; ++i) {
+            int cnt = num / radix[i];
+            num %= radix[i];
+            while (cnt--)
+                ret += symbol[i];
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.intToRoman(1) << endl;
-	cout << sol.intToRoman(4) << endl;
-	cout << sol.intToRoman(5) << endl;
-	cout << sol.intToRoman(9) << endl;
-	cout << sol.intToRoman(10) << endl;
-	cout << sol.intToRoman(11) << endl;
-	cout << sol.intToRoman(111) << endl;
-	cout << sol.intToRoman(234) << endl;
-	cout << sol.intToRoman(2111) << endl;
+    cout << sol.intToRoman(1) << endl;
+    cout << sol.intToRoman(4) << endl;
+    cout << sol.intToRoman(5) << endl;
+    cout << sol.intToRoman(9) << endl;
+    cout << sol.intToRoman(10) << endl;
+    cout << sol.intToRoman(11) << endl;
+    cout << sol.intToRoman(111) << endl;
+    cout << sol.intToRoman(234) << endl;
+    cout << sol.intToRoman(2111) << endl;
 
-	return 0;
+    return 0;
 }

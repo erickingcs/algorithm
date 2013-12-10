@@ -21,41 +21,44 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	bool isPalindrome(string s) {
-		int len = s.size();
-		if (len <= 1)
-			return true; // be careful
+    bool isPalindrome(string s)
+    {
+        int len = s.size();
+        if (len <= 1)
+            return true; // be careful
 
-		int start = 0, end = len - 1;
-		while (start < end) {
-			while (!isalnum(s[start]) && start < end) {
-				start++;
-			}
-			while (!isalnum(s[end]) && start < end) {
-				end--;
-			}
-			if (start == end)
-				return true;
-			if (s[start] == s[end] || abs(s[start] - s[end]) == 32) {
-				start++;
-				end--;
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+        int start = 0, end = len - 1;
+        while (start < end) {
+            while (!isalnum(s[start]) && start < end) {
+                start++;
+            }
+            while (!isalnum(s[end]) && start < end) {
+                end--;
+            }
+            if (start == end)
+                return true;
+            if (s[start] == s[end] || abs(s[start] - s[end]) == 32) {
+                start++;
+                end--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
-int main(int argc, char* argv[]) {
-	string s1("A man, a plan, a canal: Panama");
-	string s2("ab");
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    string s1("A man, a plan, a canal: Panama");
+    string s2("ab");
+    Solution sol;
 
-	cout << sol.isPalindrome(s1) << endl;
-	cout << sol.isPalindrome(s2) << endl;
+    cout << sol.isPalindrome(s1) << endl;
+    cout << sol.isPalindrome(s2) << endl;
 
-	return 0;
+    return 0;
 }

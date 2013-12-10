@@ -20,39 +20,42 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// equal to the number of binary trees with n elements(similar tree)
-	
-	// considering total element n, we can let i(1...n) to be root
-	// and calculate number of left sub tree (1...i-1) iLeftNum and right sub tree (i+1...n) iRightNum
-	// iLeftNum * iRightNum is the number of trees such that element i is root
-	// totalNumber = sum(iLeftNum * iRightNum), i from 1 to n
-    int numTrees(int n) {
-    	if (n < 0) return -1;  // error
-    	if (n == 0 || n == 1) return 1; // empty tree or one node tree
+    // equal to the number of binary trees with n elements(similar tree)
 
-    	vector<int> dp(n + 1);
-    	dp[0] = 1;
-    	// dp[i] means number of tree node 1...i
-    	// dp[i] = dp[j] * dp[i-j-1], j from 0 to i - 1, j is the number of left sub tree node
-    	for (int i = 1; i <= n; i++) {
-    		for (int j = 0; j < i; j++) {
-    			dp[i] += dp[j] * dp[i - j - 1];
-    		}
-    	}
+    // considering total element n, we can let i(1...n) to be root
+    // and calculate number of left sub tree (1...i-1) iLeftNum and right sub tree (i+1...n) iRightNum
+    // iLeftNum * iRightNum is the number of trees such that element i is root
+    // totalNumber = sum(iLeftNum * iRightNum), i from 1 to n
+    int numTrees(int n)
+    {
+        if (n < 0) return -1;  // error
+        if (n == 0 || n == 1) return 1; // empty tree or one node tree
 
-    	return dp[n];
+        vector<int> dp(n + 1);
+        dp[0] = 1;
+        // dp[i] means number of tree node 1...i
+        // dp[i] = dp[j] * dp[i-j-1], j from 0 to i - 1, j is the number of left sub tree node
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] += dp[j] * dp[i - j - 1];
+            }
+        }
+
+        return dp[n];
     }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	
-	cout << sol.numTrees(0) << endl;
-	cout << sol.numTrees(1) << endl;
-	cout << sol.numTrees(2) << endl;
-	cout << sol.numTrees(3) << endl;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	return 0;
+    cout << sol.numTrees(0) << endl;
+    cout << sol.numTrees(1) << endl;
+    cout << sol.numTrees(2) << endl;
+    cout << sol.numTrees(3) << endl;
+
+    return 0;
 }

@@ -17,32 +17,35 @@ Note: You may not slant the container.
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// greedy algorithm
-    int maxArea(vector<int> &height) {
-    	int maxAreaSize = 0;
-    	int i = 0, j = height.size() - 1;
+    // greedy algorithm
+    int maxArea(vector<int> &height)
+    {
+        int maxAreaSize = 0;
+        int i = 0, j = height.size() - 1;
 
-    	while (i < j) {
-    		int area = (j - i) * min(height[i], height[j]);
-    		maxAreaSize = max(area, maxAreaSize);
+        while (i < j) {
+            int area = (j - i) * min(height[i], height[j]);
+            maxAreaSize = max(area, maxAreaSize);
 
-    		// assume height[i] <= height[j], it means height is fixed
-    		// areas with other lines can not be bigger than with j as they are close to i
-    		if (height[i] <= height[j]) i++;
-    		else j--;
-    	}
+            // assume height[i] <= height[j], it means height is fixed
+            // areas with other lines can not be bigger than with j as they are close to i
+            if (height[i] <= height[j]) i++;
+            else j--;
+        }
 
-    	return maxAreaSize;
+        return maxAreaSize;
     }
 };
 
-int main(int argc, char* argv[]) {
-	vector<int> v = { 1, 2, 3 };
-	Solution sol;
+int main(int argc, char* argv[])
+{
+    vector<int> v = { 1, 2, 3 };
+    Solution sol;
 
-	cout << sol.maxArea(v) << endl;
+    cout << sol.maxArea(v) << endl;
 
-	return 0;
+    return 0;
 }

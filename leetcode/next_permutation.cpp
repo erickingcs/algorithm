@@ -35,45 +35,48 @@ using namespace std;
  Step 4: Reverse A[k+1] to the end
 
  */
-class Solution {
+class Solution
+{
 public:
-	void nextPermutation(vector<int> &num) {
-		int k = num.size() - 1;
-		while (k) { // step 1
-			if (num[k - 1] < num[k])
-				break;
-			k--;
-		}
-		if (k == 0) {
-			reverse(num.begin(), num.end());
-			return;
-		}
-		k--;
+    void nextPermutation(vector<int> &num)
+    {
+        int k = num.size() - 1;
+        while (k) { // step 1
+            if (num[k - 1] < num[k])
+                break;
+            k--;
+        }
+        if (k == 0) {
+            reverse(num.begin(), num.end());
+            return;
+        }
+        k--;
 
-		int l = num.size() - 1;
-		while (l) { // step 2
-			if (num[l] > num[k])
-				break;
-			l--;
-		}
+        int l = num.size() - 1;
+        while (l) { // step 2
+            if (num[l] > num[k])
+                break;
+            l--;
+        }
 
-		swap(num[k], num[l]); // step 3
-		reverse(num.begin() + k + 1, num.end()); // step 4
-	}
+        swap(num[k], num[l]); // step 3
+        reverse(num.begin() + k + 1, num.end()); // step 4
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	vector<int> v = { 1, 2, 3 };
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    vector<int> v = { 1, 2, 3 };
 
-	int k = 7;
-	while (k--) {
-		for (auto t : v)
-			cout << t << ends;
-		cout << endl;
+    int k = 7;
+    while (k--) {
+        for (auto t : v)
+            cout << t << ends;
+        cout << endl;
 
-		sol.nextPermutation(v);
-	}
+        sol.nextPermutation(v);
+    }
 
-	return 0;
+    return 0;
 }

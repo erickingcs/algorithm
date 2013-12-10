@@ -23,57 +23,60 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
-		int numOfStation = gas.size();
-		if (numOfStation == 0)
-			return -1;
-		/*
-		 * cannot pass OJ here, see test case three
-		 * however, I don't think it is reasonable because
-		 * if there is only one station, how should we travel around?
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost)
+    {
+        int numOfStation = gas.size();
+        if (numOfStation == 0)
+            return -1;
+        /*
+         * cannot pass OJ here, see test case three
+         * however, I don't think it is reasonable because
+         * if there is only one station, how should we travel around?
 
-		else if (numOfStation == 1)
-			return 0;
-		*/
+        else if (numOfStation == 1)
+        	return 0;
+        */
 
-		vector<int> gap;
-		for (int i = 0; i < numOfStation; i++) {
-			gap.push_back(gas[i] - cost[i]);
-		}
+        vector<int> gap;
+        for (int i = 0; i < numOfStation; i++) {
+            gap.push_back(gas[i] - cost[i]);
+        }
 
-		int start = 0, end = 0, sum = 0, tmp = 0;
-		do {
-			tmp = sum + gap[end];
-			if (tmp >= 0) {
-				end = (end + 1) % numOfStation;  // go ahead, end++
-				sum = tmp;
-			} else {
-				// start--, to find a new start point
-				start = (start - 1 + numOfStation) % numOfStation;
-				sum += gap[start];
-			}
-		} while (start != end);
+        int start = 0, end = 0, sum = 0, tmp = 0;
+        do {
+            tmp = sum + gap[end];
+            if (tmp >= 0) {
+                end = (end + 1) % numOfStation;  // go ahead, end++
+                sum = tmp;
+            } else {
+                // start--, to find a new start point
+                start = (start - 1 + numOfStation) % numOfStation;
+                sum += gap[start];
+            }
+        } while (start != end);
 
-		return sum >= 0 ? start : -1;
-	}
+        return sum >= 0 ? start : -1;
+    }
 };
 
-int main(int argc, char* argv[]) {
-	Solution sol;
-	vector<int> gas1 = { 1, 0 };
-	vector<int> cost1 = { 1, 1 };
+int main(int argc, char* argv[])
+{
+    Solution sol;
+    vector<int> gas1 = { 1, 0 };
+    vector<int> cost1 = { 1, 1 };
 
-	vector<int> gas2 = { 1, 1, 2 };
-	vector<int> cost2 = { 1, 2, 1 };
+    vector<int> gas2 = { 1, 1, 2 };
+    vector<int> cost2 = { 1, 2, 1 };
 
-	vector<int> gas3 = { 4 };
-	vector<int> cost3 = { 5 };
+    vector<int> gas3 = { 4 };
+    vector<int> cost3 = { 5 };
 
-	cout << sol.canCompleteCircuit(gas1, cost1) << endl;
-	cout << sol.canCompleteCircuit(gas2, cost2) << endl;
-	cout << sol.canCompleteCircuit(gas3, cost3) << endl;
+    cout << sol.canCompleteCircuit(gas1, cost1) << endl;
+    cout << sol.canCompleteCircuit(gas2, cost2) << endl;
+    cout << sol.canCompleteCircuit(gas3, cost3) << endl;
 
-	return 0;
+    return 0;
 }

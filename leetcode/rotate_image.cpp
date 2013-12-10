@@ -16,40 +16,43 @@
 
 using namespace std;
 
-class Solution {
-	public:
-		void rotate(vector<vector<int>> &matrix) {
-			int len = matrix.size();
-			if (len <= 0) return;
+class Solution
+{
+public:
+    void rotate(vector<vector<int>> &matrix)
+    {
+        int len = matrix.size();
+        if (len <= 0) return;
 
-			// swap counter-diagonal
-			for (int i = 0; i < len; i++) {
-				for (int j = 0; j < len - i - 1; j++) {
-					swap(matrix[i][j], matrix[len - j - 1][len - i - 1]);
-				}
-			}
+        // swap counter-diagonal
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len - i - 1; j++) {
+                swap(matrix[i][j], matrix[len - j - 1][len - i - 1]);
+            }
+        }
 
-			// swap horizontal middle line
-			for (int i = 0; i < len / 2; i++) {
-				for (int j = 0; j < len; j++) {
-					swap(matrix[i][j], matrix[len - i - 1][j]);
-				}
-			}
-		}
+        // swap horizontal middle line
+        for (int i = 0; i < len / 2; i++) {
+            for (int j = 0; j < len; j++) {
+                swap(matrix[i][j], matrix[len - i - 1][j]);
+            }
+        }
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	vector<vector<int>> v = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    vector<vector<int>> v = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-	sol.rotate(v);
+    sol.rotate(v);
 
-	for (auto &row : v) {
-		for (auto c : row) {
-			cout << c << ends;
-		}
-		cout << endl;
-	}
+    for (auto &row : v) {
+        for (auto c : row) {
+            cout << c << ends;
+        }
+        cout << endl;
+    }
 
-	return 0;
+    return 0;
 }

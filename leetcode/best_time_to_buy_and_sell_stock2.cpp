@@ -16,31 +16,34 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// actually, it equals to calculate sum of all increasing line segment
-	int maxProfit(vector<int> &prices) {
-		int len = prices.size();
-		if (len < 2)
-			return 0;
+    // actually, it equals to calculate sum of all increasing line segment
+    int maxProfit(vector<int> &prices)
+    {
+        int len = prices.size();
+        if (len < 2)
+            return 0;
 
-		int ret = 0;
-		int i;
-		for (i = 1; i < len; ++i) {
-			if (prices[i] > prices[i - 1]) {
-				ret += prices[i] - prices[i - 1];
-			}
-		}
+        int ret = 0;
+        int i;
+        for (i = 1; i < len; ++i) {
+            if (prices[i] > prices[i - 1]) {
+                ret += prices[i] - prices[i - 1];
+            }
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	vector<int> v = { 1, 2, 6, 3, 9 };
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    vector<int> v = { 1, 2, 6, 3, 9 };
+    Solution sol;
 
-	cout << sol.maxProfit(v) << endl;
+    cout << sol.maxProfit(v) << endl;
 
-	return 0;
+    return 0;
 }

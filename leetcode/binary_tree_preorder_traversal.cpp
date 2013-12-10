@@ -28,47 +28,51 @@ using namespace std;
 
 //Definition for binary tree
 struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) :
-			val(x), left(NULL), right(NULL) {
-	}
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	vector<int> preorderTraversal(TreeNode *root) {
-		vector<int> ret;
-		stack<TreeNode*> s;
-		TreeNode *cur = root;
+    vector<int> preorderTraversal(TreeNode *root)
+    {
+        vector<int> ret;
+        stack<TreeNode*> s;
+        TreeNode *cur = root;
 
-		while (cur || !s.empty()) {
-			if (cur) {
-				ret.push_back(cur->val);
-				s.push(cur);
-				cur = cur->left;
-			} else {
-				cur = s.top();
-				s.pop();
-				cur = cur->right;
-			}
-		}
-		return ret;
-	}
+        while (cur || !s.empty()) {
+            if (cur) {
+                ret.push_back(cur->val);
+                s.push(cur);
+                cur = cur->left;
+            } else {
+                cur = s.top();
+                s.pop();
+                cur = cur->right;
+            }
+        }
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	TreeNode *root = new TreeNode(1);
-	root->right = new TreeNode(2);
-	root->right->left = new TreeNode(3);
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    TreeNode *root = new TreeNode(1);
+    root->right = new TreeNode(2);
+    root->right->left = new TreeNode(3);
 
-	vector<int> ret = sol.preorderTraversal(root);
+    vector<int> ret = sol.preorderTraversal(root);
 
-	for (auto t : ret)
-		cout << t << ends;
-	cout << endl;
+    for (auto t : ret)
+        cout << t << ends;
+    cout << endl;
 
-	return 0;
+    return 0;
 }

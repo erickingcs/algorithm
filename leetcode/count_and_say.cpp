@@ -19,55 +19,59 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	string getNext(string &s) {
-		string ret;
-		int cnt = 1;
+    string getNext(string &s)
+    {
+        string ret;
+        int cnt = 1;
 
-		int i;
-		for (i = 1; i < s.size(); i++) {
-			if (s[i] == s[i - 1]) // count duplicate numbers
-				cnt++;
-			else { //
-				ret += cnt + '0'; // count
-				ret += s[i - 1]; // number
-				cnt = 1; // reset count
-			}
-		}
+        int i;
+        for (i = 1; i < s.size(); i++) {
+            if (s[i] == s[i - 1]) // count duplicate numbers
+                cnt++;
+            else { //
+                ret += cnt + '0'; // count
+                ret += s[i - 1]; // number
+                cnt = 1; // reset count
+            }
+        }
 
-		// the last one
-		ret += cnt + '0';
-		ret += s[i - 1];
+        // the last one
+        ret += cnt + '0';
+        ret += s[i - 1];
 
-		return ret;
-	}
+        return ret;
+    }
 
-	string countAndSay(int n) {
-		if (n <= 0)
-			return "";
+    string countAndSay(int n)
+    {
+        if (n <= 0)
+            return "";
 
-		string ret("1");
-		if (n == 1)
-			return ret;
+        string ret("1");
+        if (n == 1)
+            return ret;
 
-		for (int i = 1; i < n; i++) {
-			ret = getNext(ret);
-		}
+        for (int i = 1; i < n; i++) {
+            ret = getNext(ret);
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    Solution sol;
 
-	cout << sol.countAndSay(1) << endl;
-	cout << sol.countAndSay(2) << endl;
-	cout << sol.countAndSay(3) << endl;
-	cout << sol.countAndSay(4) << endl;
-	cout << sol.countAndSay(5) << endl;
-	cout << sol.countAndSay(6) << endl;
+    cout << sol.countAndSay(1) << endl;
+    cout << sol.countAndSay(2) << endl;
+    cout << sol.countAndSay(3) << endl;
+    cout << sol.countAndSay(4) << endl;
+    cout << sol.countAndSay(5) << endl;
+    cout << sol.countAndSay(6) << endl;
 
-	return 0;
+    return 0;
 }

@@ -21,68 +21,73 @@
 using namespace std;
 
 // O(log n)
-class Solution {
+class Solution
+{
 public:
-	bool findLeft(int a[], int n, int target, int &left) {
-		int low = 0, high = n - 1;
-		while (low <= high) {
-			int mid = low + (high - low) / 2;
-			if (a[mid] > target)
-				high = mid - 1;
-			else if (a[mid] < target)
-				low = mid + 1;
-			else { // a[mid] == target
-				if (a[low] == target) {
-					left = low; // update lower bound
-					return true;
-				}
+    bool findLeft(int a[], int n, int target, int &left)
+    {
+        int low = 0, high = n - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (a[mid] > target)
+                high = mid - 1;
+            else if (a[mid] < target)
+                low = mid + 1;
+            else { // a[mid] == target
+                if (a[low] == target) {
+                    left = low; // update lower bound
+                    return true;
+                }
 
-				low += 1; // continue find lower bound
-				high = mid;
-			}
-		}
+                low += 1; // continue find lower bound
+                high = mid;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	bool findRight(int a[], int n, int target, int &right) {
-		int low = 0, high = n - 1;
-		while (low <= high) {
-			int mid = low + (high - low) / 2;
-			if (a[mid] > target)
-				high = mid - 1;
-			else if (a[mid] < target)
-				low = mid + 1;
-			else { // a[mid] == target
-				if (a[high] == target) {
-					right = high; // update upper bound
-					return true;
-				}
-				low = mid; // continue find upper bound
-				high -= 1;
-			}
-		}
+    bool findRight(int a[], int n, int target, int &right)
+    {
+        int low = 0, high = n - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (a[mid] > target)
+                high = mid - 1;
+            else if (a[mid] < target)
+                low = mid + 1;
+            else { // a[mid] == target
+                if (a[high] == target) {
+                    right = high; // update upper bound
+                    return true;
+                }
+                low = mid; // continue find upper bound
+                high -= 1;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	vector<int> searchRange(int A[], int n, int target) {
-		vector<int> ret;
-		int left = -1, right = -1;
-		if (findLeft(A, n, target, left) && findRight(A, n, target, right))
-			;
-		ret.push_back(left);
-		ret.push_back(right);
-		return ret;
-	}
+    vector<int> searchRange(int A[], int n, int target)
+    {
+        vector<int> ret;
+        int left = -1, right = -1;
+        if (findLeft(A, n, target, left) && findRight(A, n, target, right))
+            ;
+        ret.push_back(left);
+        ret.push_back(right);
+        return ret;
+    }
 };
 
-int main(int argc, char *argv[]) {
-	Solution sol;
-	int a[] = { 5, 7, 7, 8, 8, 10 };
+int main(int argc, char *argv[])
+{
+    Solution sol;
+    int a[] = { 5, 7, 7, 8, 8, 10 };
 
-	vector<int> ret = sol.searchRange(a, sizeof(a) / sizeof(int), 8);
-	cout << ret[0] << ends << ret[1] << endl;
+    vector<int> ret = sol.searchRange(a, sizeof(a) / sizeof(int), 8);
+    cout << ret[0] << ends << ret[1] << endl;
 
-	return 0;
+    return 0;
 }

@@ -19,58 +19,63 @@ using namespace std;
  * Definition for singly-linked list.
  */
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
+    int val;
+    ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL)
+    {
+    }
 };
 
-class Solution {
+class Solution
+{
 public:
-	ListNode *deleteDuplicates(ListNode *head) {
-		if (head == NULL)
-			return head;
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        if (head == NULL)
+            return head;
 
-		ListNode *p1 = head, *p2 = head->next;
+        ListNode *p1 = head, *p2 = head->next;
 
-		while (p2) {
-			while (p2 && p1->val == p2->val) {
-				// might free memory here
-				p2 = p2->next;
-			}
+        while (p2) {
+            while (p2 && p1->val == p2->val) {
+                // might free memory here
+                p2 = p2->next;
+            }
 
-			p1->next = p2;
-			if (p2 == NULL) break;
+            p1->next = p2;
+            if (p2 == NULL) break;
 
-			p1 = p2;
-			p2 = p2->next;
-		}
+            p1 = p2;
+            p2 = p2->next;
+        }
 
-		return head;
-	}
+        return head;
+    }
 };
 
-void output_list(ListNode *head) {
-	while (head) {
-		cout << head->val << "->";
-		head = head->next;
-	}
+void output_list(ListNode *head)
+{
+    while (head) {
+        cout << head->val << "->";
+        head = head->next;
+    }
 
-	cout << endl;
+    cout << endl;
 }
 
-int main(int argc, char *argv[]) {
-	ListNode *head = new ListNode(1);
-	head->next = new ListNode(1);
-	head->next->next = new ListNode(2);
-	head->next->next->next = new ListNode(3);
-	head->next->next->next->next = new ListNode(3);
-	Solution sol;
+int main(int argc, char *argv[])
+{
+    ListNode *head = new ListNode(1);
+    head->next = new ListNode(1);
+    head->next->next = new ListNode(2);
+    head->next->next->next = new ListNode(3);
+    head->next->next->next->next = new ListNode(3);
+    Solution sol;
 
-	output_list(head);
-	ListNode *ret = sol.deleteDuplicates(head);
-	output_list(ret);
+    output_list(head);
+    ListNode *ret = sol.deleteDuplicates(head);
+    output_list(ret);
 
-	return 0;
+    return 0;
 }

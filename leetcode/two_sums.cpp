@@ -20,57 +20,61 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-	// brute force, O(n^2)
-	vector<int> twoSum1(vector<int> &numbers, int target) {
-		vector<int> ret;
-		auto begin = numbers.begin(), end = numbers.end();
-		for (auto ite = begin; ite != end; ite++) {
-			auto t = find(ite + 1, end, target - *ite);
-			if (t != end) {
-				ret.push_back(ite - begin + 1);
-				ret.push_back(t - begin + 1);
-				return ret;
-			}
-		}
-	}
+    // brute force, O(n^2)
+    vector<int> twoSum1(vector<int> &numbers, int target)
+    {
+        vector<int> ret;
+        auto begin = numbers.begin(), end = numbers.end();
+        for (auto ite = begin; ite != end; ite++) {
+            auto t = find(ite + 1, end, target - *ite);
+            if (t != end) {
+                ret.push_back(ite - begin + 1);
+                ret.push_back(t - begin + 1);
+                return ret;
+            }
+        }
+    }
 
-	// hash, O(n)
-	vector<int> twoSum2(vector<int> &numbers, int target) {
-		vector<int> ret;
-		unordered_map<int, int> hash; // no need to use multimap
+    // hash, O(n)
+    vector<int> twoSum2(vector<int> &numbers, int target)
+    {
+        vector<int> ret;
+        unordered_map<int, int> hash; // no need to use multimap
 
-		for (int i = 0; i < numbers.size(); i++) {
-			hash[numbers[i]] = i;
-		}
+        for (int i = 0; i < numbers.size(); i++) {
+            hash[numbers[i]] = i;
+        }
 
-		// traverse the original array, if it has duplicate numbers and those duplicate
-		// numbers' addition is target, it must have two duplicate
-		// we keep the latter one's subscript in hash table
-		for (int i = 0; i < numbers.size(); i++) { // original array
-			int sub = target - numbers[i];
-			if (hash.find(sub) != hash.end()) {
-				int index2 = hash[sub];
-				if (i > index2)
-					swap(i, index2);
-				ret.push_back(i + 1);
-				ret.push_back(index2 + 1);
-				return ret;
-			}
-		}
-	}
+        // traverse the original array, if it has duplicate numbers and those duplicate
+        // numbers' addition is target, it must have two duplicate
+        // we keep the latter one's subscript in hash table
+        for (int i = 0; i < numbers.size(); i++) { // original array
+            int sub = target - numbers[i];
+            if (hash.find(sub) != hash.end()) {
+                int index2 = hash[sub];
+                if (i > index2)
+                    swap(i, index2);
+                ret.push_back(i + 1);
+                ret.push_back(index2 + 1);
+                return ret;
+            }
+        }
+    }
 };
 
-int main(int argc, char* argv[]) {
-	vector<int> numbers = { 1, 2, 6, 2, 5 };
-	int target = 4;
-	Solution s;
+int main(int argc, char* argv[])
+{
+    vector<int> numbers = { 1, 2, 6, 2, 5 };
+    int target = 4;
+    Solution s;
 
-	vector<int> res = s.twoSum2(numbers, target);
-	for (auto e : res) {
-		cout << e << ends;
-	}
+    vector<int> res = s.twoSum2(numbers, target);
+    for (auto e : res) {
+        cout << e << ends;
+    }
 
-	return 0;
+    return 0;
 }
