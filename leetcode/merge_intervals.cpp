@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -56,6 +57,33 @@ public:
         vector<Interval> ret;
         for (auto e : intervals)
             ret = insert(ret, e);
+        return ret;
+    }
+};
+
+class Solution2
+{
+private:
+    static bool comp(const Interval &lht, const Interval &rht)
+    {
+        return lht.start < rht.start;
+    }
+public:
+    vector<Interval> merge(vector<Interval> &intervals)
+    {
+        if (intervals.size() <= 1) return intervals;
+        vector<Interval> ret;
+        sort(intervals.begin(), intervals.end(), comp);
+
+        ret.push_back(intervals[0]);
+        for (size_t i = 1; i < intervals.size(); i++) {
+            if (ret.back().end < intervals[i].start) {
+                ret.push_back(intervals[i]);
+            } else { // merge
+                ret.back().end = max(ret.back().end, intervals[i].end);
+            }
+        }
+
         return ret;
     }
 };
