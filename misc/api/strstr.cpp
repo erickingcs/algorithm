@@ -46,6 +46,26 @@ public:
 
         return nullptr;
     }
+
+    char* strStr2(char *s, char *p)
+    {
+        if (s == nullptr || p == nullptr)
+            return nullptr;
+
+        int sLen = strlen(s), pLen = strlen(p);
+
+        for (int i = 0; i <= sLen - pLen; i++) {
+            int j = 0, k = i;
+            while (j < pLen && s[k] == p[j]) {
+                k++;
+                j++;
+            }
+
+            if (j == pLen) return s + i;
+        }
+
+        return nullptr;
+    }
 };
 
 // KMP
